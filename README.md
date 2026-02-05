@@ -62,7 +62,7 @@ Get the project running in minutes using our automated setup scripts.
 
 ### Windows
 ```powershell
-git clone https://github.com/yourusername/TrafficAI.git
+git clone https://github.com/OdigweIfe/Live-Traffic-Detection-project.git
 cd TrafficAI
 .\setup.ps1
 flask run
@@ -70,7 +70,7 @@ flask run
 
 ### Linux / macOS
 ```bash
-git clone https://github.com/yourusername/TrafficAI.git
+git clone https://github.com/OdigweIfe/Live-Traffic-Detection-project.git
 cd TrafficAI
 chmod +x setup.sh && ./setup.sh
 source venv/bin/activate
@@ -86,7 +86,7 @@ If you prefer to set up manually:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/TrafficAI.git
+git clone https://github.com/OdigweIfe/Live-Traffic-Detection-project.git
 cd TrafficAI
 ```
 
@@ -323,7 +323,7 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
 ### Getting Help
 
-- Check the [Issues](https://github.com/yourusername/TrafficAI/issues) page
+- Check the [Issues](https://github.com/OdigweIfe/Live-Traffic-Detection-project/issues) page
 - Review the [docs](docs/) directory
 - Run with debug mode: `FLASK_ENV=development flask run`
 
