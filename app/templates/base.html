@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficAI - {% block title %}Video Analytics{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { dark: '#0f172a' },
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="{{ url_for('upload.index') }}" class="flex items-center gap-2">
+                    <div class="flex gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-white"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500 border border-white"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></div>
+                    </div>
+                    <span class="text-xl font-bold text-slate-900 tracking-tight">TrafficAI</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-8">
+                <a href="{{ url_for('dashboard.view_dashboard') }}"
+                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Dashboard</a>
+                <a href="{{ url_for('summary.view_history') }}"
+                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">History</a>
+                <a href="{{ url_for('admin.admin_dashboard') }}"
+                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Admin</a>
+                <a href="#"
+                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Settings</a>
+                <div
+                    class="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-700 shadow-sm">
+                    AD
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+</body>
+
+</html>

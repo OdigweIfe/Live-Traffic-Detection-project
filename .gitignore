@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+__pycache__
+.pytest_cache
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+ENV/
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.example
+# Database
+instance/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Flask
+instance/
+.webassets-cache
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+app/static/uploads/
+app/static/processed/
+app/static/violations/
+test_data/
+detected_plate.jpg
+config/roi/calibration_frame.jpg
+config/roi/roi_visualization.jpg
+*.backup
+
+# Models (large files - download separately)
+models/yolov8n.pt
+
+
+# Logs
+*.log
+.agent/

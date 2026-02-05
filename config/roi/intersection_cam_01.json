@@ -1,0 +1,45 @@
+{
+  "camera_id": "Intersection_Cam_01",
+  "stop_lines": [
+    {
+      "name": "North Stop Line",
+      "points": [
+        [
+          200,
+          150
+        ],
+        [
+          440,
+          150
+        ]
+      ],
+      "direction": "horizontal"
+    },
+    {
+      "name": "East Stop Line",
+      "points": [
+        [
+          480,
+          200
+        ],
+        [
+          480,
+          400
+        ]
+      ],
+      "direction": "vertical"
+    }
+  ],
+  "speed_zones": [],
+  "lane_boundaries": [],
+  "traffic_signal_roi": [
+    [
+      30,
+      30
+    ],
+    [
+      80,
+      120
+    ]
+  ]
+}

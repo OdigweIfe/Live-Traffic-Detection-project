@@ -1,0 +1,16 @@
+
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.5
+python-dotenv==1.0.0
+opencv-python-headless==4.8.1.78
+ultralytics==8.0.200
+torch
+numpy==1.26.0
+
+paddlepaddle
+paddleocr>=2.7.0
+easyocr>=1.7.0
+Pillow==10.1.0
+pytest==7.4.3
+

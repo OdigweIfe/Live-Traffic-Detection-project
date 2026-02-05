@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Processing Summary{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900">Processing Summary</h1>
+                <p class="text-slate-500 mt-2">Analysis results for processed video</p>
+            </div>
+            <a href="{{ url_for('summary.view_history') }}"
+                class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors">
+                View History
+            </a>
+        </div>
+
+        <!-- Video Player -->
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-slate-200 mb-8">
+            <video controls class="w-full aspect-video bg-black">
+                <source src="{{ url_for('static', filename='processed/' + video_filename) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Unique Vehicles -->
+            <div class="bg-white p-6 rounded-xl shadow-card border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-cyan-100 rounded-lg">
+                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-medium">Unique Vehicles</p>
+                        <p class="text-3xl font-bold text-slate-900">{{ stats.unique_vehicles }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Violations -->
+            <div class="bg-white p-6 rounded-xl shadow-card border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-red-100 rounded-lg">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-medium">Total Violations</p>
+                        <p class="text-3xl font-bold text-slate-900">{{ stats.total_violations }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duration -->
+            <div class="bg-white p-6 rounded-xl shadow-card border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-indigo-100 rounded-lg">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-medium">Processing Duration</p>
+                        <p class="text-3xl font-bold text-slate-900">{{ stats.duration }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-between">
+            <a href="/"
+                class="px-6 py-3 bg-white text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors font-medium">
+                ← Back to Home
+            </a>
+            <a href="/dashboard"
+                class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl">
+                View All Violations →
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

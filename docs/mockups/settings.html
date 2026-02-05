@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficAI - Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { dark: '#0f172a' },
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div class="w-full px-6 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2">
+                <div class="flex gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500 border border-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></div>
+                </div>
+                <span class="text-lg font-bold text-slate-900 tracking-tight">TrafficAI</span>
+            </a>
+            <a href="dashboard.html"
+                class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2 group">
+                <span
+                    class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-200 group-hover:text-slate-600 transition-all"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg></span>
+                Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-10">
+
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">System Configuration</h1>
+                <p class="text-slate-500 mt-2">Manage detection zones and sensitivity parameters.</p>
+            </div>
+
+            <button
+                class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                    <polyline points="17 21 17 13 7 13 7 21" />
+                    <polyline points="7 3 7 8 15 8" />
+                </svg>
+                Save Changes
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8">
+
+            <!-- ROI Section -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-card">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Region of Interest (ROI)</h3>
+                        <p class="text-slate-500 text-sm">Define monitoring zones for violations.</p>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded-lg text-sm hover:bg-slate-100 transition-colors shadow-sm border border-slate-200">
+                        + Add Zone
+                    </button>
+                </div>
+
+                <div
+                    class="w-full h-80 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center relative overflow-hidden group hover:border-slate-300 transition-colors cursor-crosshair">
+                    <span class="text-slate-400 font-medium flex flex-col items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                            <circle cx="9" cy="9" r="2" />
+                            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                        </svg>
+                        Click to Draw Zone
+                    </span>
+
+                    <!-- Mock ROI Overlay -->
+                    <div class="absolute inset-0 pointer-events-none opacity-80">
+                        <svg width="100%" height="100%">
+                            <polygon points="120,120 450,120 400,320 170,320" fill="rgba(239, 68, 68, 0.05)"
+                                stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5"></polygon>
+                            <circle cx="120" cy="120" r="4" fill="white" stroke="#ef4444" stroke-width="2"></circle>
+                            <circle cx="450" cy="120" r="4" fill="white" stroke="#ef4444" stroke-width="2"></circle>
+                            <circle cx="400" cy="320" r="4" fill="white" stroke="#ef4444" stroke-width="2"></circle>
+                            <circle cx="170" cy="320" r="4" fill="white" stroke="#ef4444" stroke-width="2"></circle>
+
+                            <g transform="translate(250, 220)">
+                                <rect x="-10" y="-20" width="110" height="26" rx="4" fill="#ef4444"></rect>
+                                <text x="5" y="-3" fill="white" font-size="11" font-weight="bold"
+                                    font-family="sans-serif">Red Light Zone</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mt-4 overflow-x-auto pb-2">
+                    <div
+                        class="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-bold border border-red-100 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500"></span> Red Light Zone 1 <span
+                            class="ml-1 cursor-pointer hover:text-red-800">×</span>
+                    </div>
+                    <div
+                        class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-lg text-xs font-bold border border-yellow-100 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span> Speed Zone A <span
+                            class="ml-1 cursor-pointer hover:text-yellow-800">×</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameters -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-card">
+                    <h3 class="text-lg font-bold text-slate-900 mb-6">Parameters</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-sm font-medium text-slate-700">Confidence Threshold</label>
+                                <span class="text-sm font-bold text-emerald-600 bg-emerald-50 px-2 rounded">65%</span>
+                            </div>
+                            <input type="range"
+                                class="w-full accent-slate-900 h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer"
+                                min="0" max="100" value="65">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Speed Limit (km/h)</label>
+                            <div class="relative">
+                                <input type="number" value="60"
+                                    class="w-full pl-4 pr-12 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 font-medium focus:outline-none focus:border-slate-400 shadow-sm">
+                                <span class="absolute right-4 top-2.5 text-slate-400 text-sm font-bold">km/h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-card">
+                    <h3 class="text-lg font-bold text-slate-900 mb-6">Notifications</h3>
+                    <div class="space-y-4">
+                        <label
+                            class="flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <span class="text-slate-600 font-medium text-sm group-hover:text-slate-900">Email
+                                Alerts</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div
+                                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-slate-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-slate-900">
+                                </div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <span class="text-slate-600 font-medium text-sm group-hover:text-slate-900">SMS
+                                Notifications</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer">
+                                <div
+                                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-slate-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-slate-900">
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

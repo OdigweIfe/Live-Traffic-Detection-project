@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 p-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900">Admin Dashboard</h1>
+                <p class="text-slate-500 mt-2">Database Management & Inspection</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="clearDatabase()"
+                    class="px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                        </path>
+                    </svg>
+                    Clear Database
+                </button>
+                <a href="/"
+                    class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8">
+            <!-- Sidebar: Tables List -->
+            <div class="col-span-3">
+                <div class="bg-white rounded-xl shadow-card border border-slate-200 overflow-hidden">
+                    <div class="p-4 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-semibold text-slate-900">Database Tables</h3>
+                    </div>
+                    <nav class="p-2 space-y-1">
+                        {% for table in tables %}
+                        <a href="{{ url_for('admin.admin_dashboard', table=table) }}" class="block px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                                  {% if selected_table == table %}
+                                  bg-blue-50 text-blue-700 border-l-4 border-blue-600
+                                  {% else %}
+                                  text-slate-600 hover:bg-slate-50 hover:text-slate-900
+                                  {% endif %}">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-3 text-slate-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                {{ table }}
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content: Table Data -->
+            <div class="col-span-9">
+                {% if selected_table %}
+                <div class="bg-white rounded-xl shadow-card border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">{{ selected_table }}</h2>
+                            <p class="text-sm text-slate-500">{{ data|length }} records found (showing top 100)</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    {% for col in columns %}
+                                    <th
+                                        class="px-6 py-3 font-semibold text-xs uppercase text-slate-500 tracking-wider whitespace-nowrap">
+                                        {{ col }}
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for row in data %}
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    {% for col in columns %}
+                                    <td class="px-6 py-4 text-sm text-slate-700 whitespace-nowrap max-w-xs truncate"
+                                        title="{{ row[col] }}">
+                                        {{ row[col] }}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="{{ columns|length }}" class="px-6 py-12 text-center text-slate-500">
+                                        No data found in this table
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="bg-white rounded-xl p-12 text-center border border-slate-200 border-dashed">
+                    <div
+                        class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Select a Table</h3>
+                    <p class="text-slate-500">Choose a database table from the sidebar to view its structure and data.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function clearDatabase() {
+        if (confirm('⚠️ WARNING: This will delete ALL violation records permanently.\n\nAre you sure you want to proceed?')) {
+            fetch('/admin/reset', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);
+                        window.location.reload();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => alert('Error clearing database: ' + error));
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,129 @@
+{
+  "camera_id": "Highway_Cam_01",
+  "stop_lines": [
+    {
+      "name": "Main Stop Line",
+      "points": [
+        [
+          100,
+          300
+        ],
+        [
+          540,
+          300
+        ]
+      ],
+      "direction": "horizontal"
+    }
+  ],
+  "speed_zones": [
+    {
+      "name": "Speed Zone 1",
+      "entry_line": [
+        [
+          50,
+          250
+        ],
+        [
+          590,
+          250
+        ]
+      ],
+      "exit_line": [
+        [
+          50,
+          400
+        ],
+        [
+          590,
+          400
+        ]
+      ],
+      "real_distance_m": 20.0
+    }
+  ],
+  "lane_boundaries": [
+    {
+      "name": "Lane 1",
+      "lane_number": 1,
+      "left_boundary": [
+        [
+          0,
+          200
+        ],
+        [
+          0,
+          480
+        ]
+      ],
+      "right_boundary": [
+        [
+          213,
+          200
+        ],
+        [
+          213,
+          480
+        ]
+      ]
+    },
+    {
+      "name": "Lane 2",
+      "lane_number": 2,
+      "left_boundary": [
+        [
+          213,
+          200
+        ],
+        [
+          213,
+          480
+        ]
+      ],
+      "right_boundary": [
+        [
+          426,
+          200
+        ],
+        [
+          426,
+          480
+        ]
+      ]
+    },
+    {
+      "name": "Lane 3",
+      "lane_number": 3,
+      "left_boundary": [
+        [
+          426,
+          200
+        ],
+        [
+          426,
+          480
+        ]
+      ],
+      "right_boundary": [
+        [
+          640,
+          200
+        ],
+        [
+          640,
+          480
+        ]
+      ]
+    }
+  ],
+  "traffic_signal_roi": [
+    [
+      50,
+      30
+    ],
+    [
+      100,
+      100
+    ]
+  ]
+}

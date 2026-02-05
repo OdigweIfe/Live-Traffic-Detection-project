@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficAI - Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { dark: '#0f172a' },
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div class="w-full px-6 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2">
+                <div class="flex gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500 border border-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></div>
+                </div>
+                <span class="text-lg font-bold text-slate-900 tracking-tight">TrafficAI</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center gap-2 text-sm font-medium text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    System Healthy
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex h-[calc(100vh-64px)] overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 border-r border-slate-200 bg-white hidden md:flex flex-col p-4 bg-slate-50/30">
+            <div class="space-y-2">
+                <a href="dashboard.html"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-2.5 bg-slate-900 text-white rounded-xl font-medium shadow-card relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" x2="8" y1="13" y2="13" />
+                        <line x1="16" x2="8" y1="17" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    Reports
+                </a>
+                <a href="home.html"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" x2="12" y1="3" y2="15" />
+                    </svg>
+                    Uploads
+                </a>
+                <a href="settings.html"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main View -->
+        <main class="flex-1 overflow-auto p-8 bg-slate-50">
+
+            <!-- Page Header -->
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Analytics & Reports</h2>
+                    <p class="text-slate-500 mt-2">Generate insights and export data for review.</p>
+                </div>
+                <div class="flex gap-3">
+                    <div class="flex items-center bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-soft">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-slate-400 mr-2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700">Oct 1 - Oct 31, 2024</span>
+                    </div>
+                    <button
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        Export CSV
+                    </button>
+                    <button
+                        class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" x2="8" y1="13" y2="13" />
+                            <line x1="16" x2="8" y1="17" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                        </svg>
+                        Export PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Monthly Total -->
+                <div
+                    class="p-6 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-600/20 text-white relative overflow-hidden group">
+                    <div class="absolute -right-6 -top-6 opacity-10 transform rotate-12 scale-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path d="M12 2v20" />
+                            <path d="m17 5-5-3-5 3" />
+                            <path d="m17 19-5 3-5-3" />
+                        </svg>
+                    </div>
+                    <span class="text-indigo-100 text-sm font-medium">Monthly Violations</span>
+                    <h3 class="text-4xl font-bold mt-1">2,845</h3>
+                    <div class="mt-4 flex items-center gap-2">
+                        <span class="bg-white/20 px-2 py-1 rounded-lg text-xs font-bold backdrop-blur-sm">+18%
+                            growth</span>
+                    </div>
+                </div>
+
+                <!-- Revenue Potential -->
+                <div
+                    class="p-6 bg-white rounded-2xl border border-slate-200 shadow-card relative overflow-hidden group">
+                    <span class="text-slate-500 text-sm font-medium">Est. Fine Revenue</span>
+                    <h3 class="text-4xl font-bold text-slate-900 mt-1">$42,500</h3>
+                    <div class="mt-4 flex items-center gap-2">
+                        <span class="text-emerald-600 text-xs font-bold flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                <polyline points="17 6 23 6 23 12" />
+                            </svg>
+                            $5,200 this week
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Most Frequent -->
+                <div
+                    class="p-6 bg-white rounded-2xl border border-slate-200 shadow-card relative overflow-hidden group">
+                    <span class="text-slate-500 text-sm font-medium">Top Violation Type</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-2">Speeding (Over 60km/h)</h3>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                        <div class="bg-yellow-500 w-[65%] h-full rounded-full"></div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2">65% of all incidents</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+                <!-- Chart Placeholder -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-card h-80 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-lg text-slate-900">Incident Trends</h3>
+                        <select
+                            class="bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium px-2 py-1 outline-none">
+                            <option>Last 30 Days</option>
+                            <option>Last 6 Months</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 flex items-end gap-4 px-4 pb-2">
+                        <!-- CSS Bar Chart Mockup -->
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[40%] hover:h-[45%] transition-all duration-500">
+                        </div>
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[60%] hover:h-[65%] transition-all duration-500">
+                        </div>
+                        <div
+                            class="flex-1 bg-emerald-500 rounded-t-lg relative group h-[85%] hover:h-[90%] transition-all duration-500 shadow-lg shadow-emerald-500/30">
+                            <div
+                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                142</div>
+                        </div>
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[55%] hover:h-[60%] transition-all duration-500">
+                        </div>
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[70%] hover:h-[75%] transition-all duration-500">
+                        </div>
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[45%] hover:h-[50%] transition-all duration-500">
+                        </div>
+                        <div
+                            class="flex-1 bg-slate-100 rounded-t-lg relative group h-[65%] hover:h-[70%] transition-all duration-500">
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-400 mt-2 px-2">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                </div>
+
+                <!-- Locations List -->
+                <div
+                    class="bg-white p-0 rounded-2xl border border-slate-200 shadow-card overflow-hidden h-80 flex flex-col">
+                    <div class="p-6 border-b border-slate-100">
+                        <h3 class="font-bold text-lg text-slate-900">Violations by Location</h3>
+                    </div>
+                    <div class="flex-1 overflow-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-xs text-slate-400 font-semibold uppercase sticky top-0">
+                                <tr>
+                                    <th class="px-6 py-3">Location</th>
+                                    <th class="px-6 py-3 text-right">Count</th>
+                                    <th class="px-6 py-3 text-right">Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-6 py-3 font-medium text-slate-900">Main St. Junction</td>
+                                    <td class="px-6 py-3 text-right">842</td>
+                                    <td class="px-6 py-3 text-right text-red-500 text-xs font-bold">↑ 12%</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-6 py-3 font-medium text-slate-900">Highway 405 NB</td>
+                                    <td class="px-6 py-3 text-right">621</td>
+                                    <td class="px-6 py-3 text-right text-emerald-500 text-xs font-bold">↓ 4%</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-6 py-3 font-medium text-slate-900">Downtown Ave</td>
+                                    <td class="px-6 py-3 text-right">412</td>
+                                    <td class="px-6 py-3 text-right text-red-500 text-xs font-bold">↑ 2%</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-6 py-3 font-medium text-slate-900">School Zone 4</td>
+                                    <td class="px-6 py-3 text-right">105</td>
+                                    <td class="px-6 py-3 text-right text-emerald-500 text-xs font-bold">↓ 15%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

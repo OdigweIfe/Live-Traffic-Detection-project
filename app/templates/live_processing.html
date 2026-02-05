@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}Live Processing{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 p-6 md:p-10">
+    <div class="max-w-7xl mx-auto space-y-8">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Live Processing</h1>
+                <p class="text-slate-500 mt-2 text-lg font-medium">Real-time Traffic AI Analysis</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="relative flex h-3 w-3">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </span>
+                <span
+                    class="text-sm font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">System
+                    Online</span>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+            <!-- Left Column: Video Feed (Spans 3 cols) -->
+            <div class="lg:col-span-3">
+                <div
+                    class="bg-slate-900 rounded-3xl shadow-2xl overflow-hidden relative group border border-slate-800 ring-1 ring-white/10">
+                    <!-- Video Header Overlay -->
+                    <div
+                        class="absolute top-0 left-0 right-0 p-6 z-10 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div
+                            class="bg-black/60 backdrop-blur-md text-white/90 px-4 py-2 rounded-xl text-xs font-bold border border-white/10 shadow-lg">
+                            CAM-01 • MAIN SENSOR
+                        </div>
+                    </div>
+
+                    <!-- Video Canvas Container -->
+                    <div class="relative w-full aspect-video bg-black/90 flex items-center justify-center">
+                        <canvas id="video-canvas"
+                            class="w-full h-full object-contain pointer-events-none rounded-lg shadow-2xl"></canvas>
+
+                        <!-- Loading Overlay -->
+                        <div id="loading-overlay"
+                            class="absolute inset-0 bg-slate-900 flex items-center justify-center z-20">
+                            <div class="text-center space-y-4">
+                                <div class="relative w-20 h-20 mx-auto">
+                                    <div class="absolute inset-0 border-4 border-slate-700/50 rounded-full"></div>
+                                    <div class="absolute inset-0 border-4 border-t-blue-500 rounded-full animate-spin">
+                                    </div>
+                                </div>
+                                <p class="text-slate-400 font-medium tracking-wide animate-pulse">Initializing Neural
+                                    Engine...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="mt-6 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
+                        <span>Analysis Progress</span>
+                        <span id="progress-text">0%</span>
+                    </div>
+                    <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+                        <div id="progress-bar"
+                            class="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(37,99,235,0.3)]"
+                            style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Real-time Stats Cards -->
+            <div class="space-y-6">
+                <!-- Status Card -->
+                <div id="status-message" class="bg-white p-6 rounded-2xl shadow-card border border-slate-100">
+                    <div class="flex items-center gap-3 text-blue-700">
+                        <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span class="font-bold text-sm">System Ready</span>
+                    </div>
+                </div>
+
+                <!-- Signal State Card -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-card border border-slate-100 hover:shadow-lg transition-shadow">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Signal Status</p>
+                    <div class="flex items-center justify-between">
+                        <p class="text-3xl font-black text-slate-900" id="signal-state">--</p>
+                        <div
+                            class="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="text-slate-400">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Frame Count -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Frame</p>
+                        <p class="text-xl font-bold text-slate-900" id="frame-count">0</p>
+                    </div>
+                    <!-- Vehicle Count -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Active</p>
+                        <p class="text-xl font-bold text-blue-600" id="vehicle-count">0</p>
+                    </div>
+                    <!-- Unique Count -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Unique</p>
+                        <p class="text-xl font-bold text-indigo-600" id="unique-count">0</p>
+                    </div>
+                    <!-- Violation Count -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-red-100 bg-red-50/30">
+                        <p class="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-1">Violations</p>
+                        <p class="text-xl font-bold text-red-600" id="violation-count">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Socket.IO Client -->
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<script>
+    const canvas = document.getElementById('video-canvas');
+    const ctx = canvas.getContext('2d');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const progressBar = document.getElementById('progress-bar');
+    const frameCount = document.getElementById('frame-count');
+    const vehicleCount = document.getElementById('vehicle-count');
+    const uniqueCount = document.getElementById('unique-count');
+    const violationCount = document.getElementById('violation-count');
+    const signalState = document.getElementById('signal-state');
+    const statusMessage = document.getElementById('status-message');
+
+    // Connect to WebSocket
+    const socket = io();
+
+    socket.on('connect', () => {
+        console.log('✅ Connected to WebSocket');
+
+        // Get video path from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoPath = urlParams.get('video_path');
+        const roiConfigPath = urlParams.get('roi_config_path') || null;
+
+        if (!videoPath) {
+            showStatus('❌ No video specified', 'error');
+            return;
+        }
+
+        // Start processing
+        socket.emit('start_processing', {
+            video_path: videoPath,
+            roi_config_path: roiConfigPath
+        });
+    });
+
+    socket.on('connection_response', (data) => {
+        console.log('Connection response:', data);
+    });
+
+    socket.on('video_info', (data) => {
+        console.log('Video info:', data);
+
+        // Set canvas dimensions
+        canvas.width = data.width;
+        canvas.height = data.height;
+
+        loadingOverlay.style.display = 'none';
+        showStatus(`📹 Processing ${data.total_frames} frames at ${data.fps.toFixed(1)} FPS`, 'info');
+    });
+
+    socket.on('frame', (data) => {
+        // Draw frame on canvas
+        const img = new Image();
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = 'data:image/jpeg;base64,' + data.image;
+
+        // Update stats
+        frameCount.textContent = data.frame_index;
+        vehicleCount.textContent = data.vehicles_count;
+        uniqueCount.textContent = data.unique_vehicles || 0;
+        violationCount.textContent = data.total_violations || 0;
+
+        signalState.textContent = data.signal_state.toUpperCase();
+        signalState.textContent = data.signal_state.toUpperCase();
+        signalState.className = `text-3xl font-black ${data.signal_state === 'red' ? 'text-red-500' : data.signal_state === 'green' ? 'text-emerald-500' : 'text-slate-900'}`;
+
+        // Update progress
+        progressBar.style.width = data.progress + '%';
+        const progressText = document.getElementById('progress-text');
+        if (progressText) progressText.textContent = data.progress + '%';
+    });
+
+    socket.on('processing_complete', (data) => {
+        console.log('Processing complete:', data);
+        showStatus(`✅ Processing complete! ${data.unique_vehicles} vehicles, ${data.violations_detected} violations`, 'success');
+
+        // Redirect to dashboard after 3 seconds
+        setTimeout(() => {
+            window.location.href = '/dashboard';
+        }, 3000);
+    });
+
+    socket.on('error', (data) => {
+        console.error('Error:', data);
+        showStatus('❌ Error: ' + data.message, 'error');
+        loadingOverlay.style.display = 'none';
+    });
+
+    socket.on('processing_started', (data) => {
+        showStatus('🎬 Processing started...', 'info');
+    });
+
+    function showStatus(message, type) {
+        const colors = {
+            'info': 'text-blue-700',
+            'success': 'text-emerald-700',
+            'error': 'text-red-700'
+        };
+        const icons = {
+            'info': '<svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>',
+            'success': '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+            'error': '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+        };
+
+        statusMessage.innerHTML = `
+            <div class="flex items-center gap-3 ${colors[type] || 'text-slate-700'}">
+                ${icons[type] || ''}
+                <span class="font-bold text-sm">${message}</span>
+            </div>
+        `;
+    }
+</script>
+{% endblock %}

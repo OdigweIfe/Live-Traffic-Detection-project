@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficAI - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { dark: '#0f172a' },
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div class="w-full px-6 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2">
+                <div class="flex gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm ring-1 ring-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-sm ring-1 ring-white"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm ring-1 ring-white"></div>
+                </div>
+                <span class="text-lg font-bold text-slate-900 tracking-tight">TrafficAI</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <input type="text" placeholder="Search license plate..."
+                        class="bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-100 transition-all w-72 shadow-soft placeholder-slate-400">
+                    <svg class="absolute left-3.5 top-2.5 text-slate-400 group-focus-within:text-slate-600 transition-colors"
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex h-[calc(100vh-64px)] overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 border-r border-slate-200 bg-white hidden md:flex flex-col p-4 bg-slate-50/30">
+            <div class="space-y-2">
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-2.5 bg-slate-900 text-white rounded-xl font-medium shadow-card relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" x2="8" y1="13" y2="13" />
+                        <line x1="16" x2="8" y1="17" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    Reports
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" x2="12" y1="3" y2="15" />
+                    </svg>
+                    Uploads
+                </a>
+                <a href="settings.html"
+                    class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0 .73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    Settings
+                </a>
+            </div>
+
+            <div
+                class="mt-auto p-4 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-200 shadow-soft">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">System Status</p>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-600 font-medium">Servers</span>
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span class="text-[10px] text-emerald-600 font-bold uppercase">Online</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-600 font-medium">Cameras</span>
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                            <span class="text-[10px] text-emerald-600 font-bold uppercase">4/4 Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main View -->
+        <main class="flex-1 overflow-auto p-8 bg-slate-50">
+
+            <!-- Header -->
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Traffic Overview</h2>
+                    <p class="text-slate-500 text-sm mt-1 flex items-center gap-2">
+                        Live updates from 4 connected cameras
+                        <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                        <span class="text-xs text-slate-400">Last updated: Just now</span>
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    <!-- Modern Dropdown -->
+                    <div class="relative group">
+                        <button
+                            class="bg-white border border-slate-200 text-slate-700 text-sm font-medium rounded-xl px-4 py-2.5 shadow-soft hover:border-slate-300 hover:shadow-md transition-all flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            All Cameras
+                            <svg class="text-slate-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button
+                        class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-slate-900/10 hover:shadow-slate-900/20 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" x2="12" y1="15" y2="3" />
+                        </svg>
+                        Export Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid - High Contrast Filled Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                <!-- Card 1: Total (White/Clean) -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all group cursor-default relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-slate-900">
+                            <path d="M8 2v4" />
+                            <path d="M16 2v4" />
+                            <rect width="18" height="18" x="3" y="4" rx="2" />
+                            <path d="M3 10h18" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col h-full justify-between relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="p-2 bg-slate-100 rounded-lg text-slate-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M8 2v4" />
+                                    <path d="M16 2v4" />
+                                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                                    <path d="M3 10h18" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-emerald-600 text-[11px] font-bold bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100 flex items-center gap-1">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                    <polyline points="17 6 23 6 23 12" />
+                                </svg>
+                                12%
+                            </span>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 text-sm font-medium">Total Violations</p>
+                            <h3 class="text-3xl font-bold text-slate-900 mt-1 tracking-tight">142</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Red Light (Filled Red) -->
+                <div
+                    class="bg-red-500 p-6 rounded-2xl shadow-lg shadow-red-500/20 hover:shadow-red-500/30 transition-all group cursor-default relative overflow-hidden">
+                    <div
+                        class="absolute -right-4 -top-4 opacity-20 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                            fill="white" stroke="currentColor" stroke-width="0">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" x2="12" y1="8" y2="12" />
+                            <line x1="12" x2="12.01" y1="16" y2="16" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col h-full justify-between relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="p-2 bg-white/20 rounded-lg text-white backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" x2="12" y1="8" y2="12" />
+                                    <line x1="12" x2="12.01" y1="16" y2="16" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-white text-[11px] font-bold bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm">+5%</span>
+                        </div>
+                        <div>
+                            <p class="text-red-100 text-sm font-medium">Red Light</p>
+                            <h3 class="text-3xl font-bold text-white mt-1 tracking-tight">48</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Speeding (Filled Yellow) -->
+                <div
+                    class="bg-yellow-400 p-6 rounded-2xl shadow-lg shadow-yellow-400/20 hover:shadow-yellow-400/30 transition-all group cursor-default relative overflow-hidden">
+                    <div
+                        class="absolute -right-4 -top-4 opacity-20 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                            fill="black" stroke="currentColor" stroke-width="0">
+                            <path d="m22 2-7 20-4-9-9-4Z" />
+                            <path d="M22 2 11 13" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col h-full justify-between relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="p-2 bg-black/10 rounded-lg text-slate-900 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m22 2-7 20-4-9-9-4Z" />
+                                    <path d="M22 2 11 13" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-slate-800 text-[11px] font-bold bg-black/5 px-2 py-1 rounded-full backdrop-blur-sm">0%</span>
+                        </div>
+                        <div>
+                            <p class="text-slate-800 text-sm font-medium">Speeding</p>
+                            <h3 class="text-3xl font-bold text-slate-900 mt-1 tracking-tight">86</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Active (Filled Dark) -->
+                <div
+                    class="bg-slate-900 p-6 rounded-2xl shadow-lg shadow-slate-900/20 hover:shadow-slate-900/30 transition-all group cursor-default relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-white">
+                            <path d="M12 2v20" />
+                            <path d="m17 5-5-3-5 3" />
+                            <path d="m17 19-5 3-5-3" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col h-full justify-between relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="p-2 bg-white/10 rounded-lg text-emerald-400 ring-1 ring-white/10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 2v20" />
+                                    <path d="m17 5-5-3-5 3" />
+                                    <path d="m17 19-5 3-5-3" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm font-medium">Active Cameras</p>
+                            <h3 class="text-3xl font-bold text-white mt-1 tracking-tight">4/4</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-card">
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
+                    <div>
+                        <h3 class="font-bold text-lg text-slate-900">Recent Violations</h3>
+                        <p class="text-sm text-slate-500">Live feed from detected incidents</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="px-4 py-2 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-600 rounded-lg hover:bg-white hover:shadow-soft transition-all">View
+                            All History</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead
+                            class="bg-slate-50/50 text-slate-400 uppercase tracking-wider text-xs font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="px-6 py-4">Evidence</th>
+                                <th class="px-6 py-4">License Plate</th>
+                                <th class="px-6 py-4">Violation Type</th>
+                                <th class="px-6 py-4">Location</th>
+                                <th class="px-6 py-4">Status & Time</th>
+                                <th class="px-6 py-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <!-- Row 1 -->
+                            <tr class="hover:bg-slate-50/80 transition-colors cursor-pointer group">
+                                <td class="px-6 py-4">
+                                    <div
+                                        class="w-20 h-12 bg-slate-100 rounded-lg overflow-hidden relative border border-slate-200 shadow-sm group-hover:shadow-md transition-all">
+                                        <div
+                                            class="absolute inset-0 flex items-center justify-center text-[10px] text-slate-400 font-medium">
+                                            PREVIEW</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div
+                                        class="font-mono font-bold text-slate-900 text-base group-hover:text-red-600 transition-colors">
+                                        KA-01-AB-1234</div>
+                                    <div class="text-xs text-slate-400">Sedan • Silver</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-100 shadow-sm">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                        RED LIGHT
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-slate-700">Main St. Junction</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-bold text-yellow-600 uppercase">Pending</span>
+                                        <span class="text-xs text-slate-400">10 mins ago</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button
+                                        class="text-slate-400 hover:text-slate-900 transition-all p-2 hover:bg-slate-100 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="9 18 15 12 9 6" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2 -->
+                            <tr class="hover:bg-slate-50/80 transition-colors cursor-pointer group">
+                                <td class="px-6 py-4">
+                                    <div
+                                        class="w-20 h-12 bg-slate-100 rounded-lg overflow-hidden relative border border-slate-200 shadow-sm group-hover:shadow-md transition-all">
+                                        <div
+                                            class="absolute inset-0 flex items-center justify-center text-[10px] text-slate-400 font-medium">
+                                            PREVIEW</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div
+                                        class="font-mono font-bold text-slate-900 text-base group-hover:text-yellow-600 transition-colors">
+                                        TN-22-XY-9876</div>
+                                    <div class="text-xs text-slate-400">SUV • Black</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-yellow-50 text-yellow-600 border border-yellow-100 shadow-sm">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                        SPEEDING (84 km/h)
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-slate-700">Highway 405</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-bold text-yellow-600 uppercase">Pending</span>
+                                        <span class="text-xs text-slate-400">22 mins ago</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button
+                                        class="text-slate-400 hover:text-slate-900 transition-all p-2 hover:bg-slate-100 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="9 18 15 12 9 6" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

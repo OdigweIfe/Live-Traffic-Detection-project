@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficAI - Design System (v3)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#ef4444',    // Traffic Red
+                            yellow: '#f59e0b', // Traffic Yellow
+                            green: '#10b981',  // Traffic Green
+                            dark: '#0f172a',   // Slate 900 (High Contrast)
+                        },
+                        ui: {
+                            bg: '#f8fafc',     // Slate 50 (Page Background)
+                            card: '#ffffff',   // White (Card Surface)
+                            border: '#e2e8f0', // Slate 200
+                            subtle: '#f1f5f9', // Slate 100 (Secondary BG)
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body class="p-10 space-y-12">
+
+    <!-- Header -->
+    <header class="border-b border-ui-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-bold text-slate-900 tracking-tight">TrafficAI</h1>
+            <p class="text-slate-500 mt-2">Design System v3.0 (Modern Contrast + Traffic Accents)</p>
+        </div>
+        <div class="flex gap-2">
+            <div class="w-6 h-6 rounded-full bg-brand-red shadow-sm ring-2 ring-white"></div>
+            <div class="w-6 h-6 rounded-full bg-brand-yellow shadow-sm ring-2 ring-white"></div>
+            <div class="w-6 h-6 rounded-full bg-brand-green shadow-sm ring-2 ring-white"></div>
+        </div>
+    </header>
+
+    <!-- Colors & Surfaces -->
+    <section>
+        <h2 class="text-2xl font-semibold mb-6 border-l-4 border-slate-900 pl-4">Surfaces & Shadows</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Page Bg -->
+            <div class="space-y-2">
+                <div
+                    class="h-24 rounded-xl bg-ui-bg border border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                    Page BG</div>
+                <p class="text-sm font-medium">Background (Slate 50)</p>
+                <p class="text-xs text-slate-500">#f8fafc</p>
+            </div>
+            <!-- Card Surface -->
+            <div class="space-y-2">
+                <div
+                    class="h-24 rounded-xl bg-ui-card border border-ui-border shadow-card flex items-center justify-center text-slate-600 font-medium">
+                    Card Surface</div>
+                <p class="text-sm font-medium">Card (White + Shadow)</p>
+                <p class="text-xs text-slate-500">#ffffff (Shadow-card)</p>
+            </div>
+            <!-- Minimal Contrast -->
+            <div class="space-y-2">
+                <div
+                    class="h-24 rounded-xl bg-ui-subtle border border-ui-border flex items-center justify-center text-slate-600">
+                    Subtle Area</div>
+                <p class="text-sm font-medium">Subtle (Slate 100)</p>
+                <p class="text-xs text-slate-500">#f1f5f9</p>
+            </div>
+            <!-- High Contrast -->
+            <div class="space-y-2">
+                <div class="h-24 rounded-xl bg-slate-900 shadow-lg flex items-center justify-center text-white">Dark
+                    Acct</div>
+                <p class="text-sm font-medium">Accents (Slate 900)</p>
+                <p class="text-xs text-slate-500">#0f172a</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Components -->
+    <section>
+        <h2 class="text-2xl font-semibold mb-6 border-l-4 border-slate-900 pl-4">Modern UI Elements</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+            <!-- Modern Dropdown -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium text-slate-700">Modern Select / Dropdown</h3>
+                <div class="relative w-72">
+                    <button
+                        class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 flex items-center justify-between shadow-soft hover:border-slate-300 transition-all text-sm font-medium text-slate-700">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            Live Cameras
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-slate-400">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+                    <!-- Mock Open State -->
+                    <div
+                        class="absolute top-12 left-0 w-full bg-white rounded-xl shadow-float border border-slate-100 p-1.5 z-10">
+                        <div
+                            class="px-3 py-2 hover:bg-slate-50 rounded-lg text-sm text-slate-700 cursor-pointer flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Live Cameras
+                        </div>
+                        <div
+                            class="px-3 py-2 hover:bg-slate-50 rounded-lg text-sm text-slate-700 cursor-pointer flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-slate-400"></span> Archived Footage
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Input -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium text-slate-700">Floating Label / Clean Input</h3>
+                <div class="w-72">
+                    <div class="relative group">
+                        <input type="text" placeholder=" "
+                            class="peer w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-100 transition-all shadow-soft placeholder-transparent">
+                        <label
+                            class="absolute left-4 top-3 text-slate-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-slate-400 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:bg-white peer-focus:px-1 peer-focus:text-slate-600 pointer-events-none">License
+                            Plate</label>
+                        <div class="absolute right-3 top-3 text-slate-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                <line x1="8" x2="16" y1="12" y2="12" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Cards & Stats -->
+    <section>
+        <h2 class="text-2xl font-semibold mb-6 border-l-4 border-slate-900 pl-4">Stats & Cards (High Contract)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Modern Stat Card -->
+            <div
+                class="p-6 bg-white border border-slate-100 rounded-2xl shadow-card hover:shadow-float transition-all relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="text-slate-900">
+                        <path d="M12 20V4" />
+                        <path d="m19 13-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-slate-500 text-sm font-medium mb-1">Total Violations</span>
+                    <span class="text-4xl font-bold text-slate-900 tracking-tight">1,284</span>
+                    <div class="flex items-center gap-2 mt-3">
+                        <span
+                            class="bg-emerald-50 text-emerald-600 text-xs font-bold px-2 py-1 rounded-full border border-emerald-100 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                                <polyline points="16 7 22 7 22 13" />
+                            </svg>
+                            12.5%
+                        </span>
+                        <span class="text-xs text-slate-400">vs last week</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Stat Card (Filled) -->
+            <div
+                class="p-6 bg-red-500 rounded-2xl shadow-lg shadow-red-500/20 text-white relative overflow-hidden group">
+                <div
+                    class="absolute -right-4 -top-4 opacity-10 transform rotate-12 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <circle cx="12" cy="12" r="10" />
+                    </svg>
+                </div>
+                <div class="flex flex-col relative z-10">
+                    <span class="text-red-100 text-sm font-medium mb-1">Critical Alerts</span>
+                    <span class="text-4xl font-bold tracking-tight">48</span>
+                    <div class="flex items-center gap-2 mt-3">
+                        <span class="bg-white/20 text-white text-xs font-bold px-2 py-1 rounded-full backdrop-blur-sm">
+                            +5% today
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Card -->
+            <div
+                class="p-6 bg-white border-l-4 border-brand-red rounded-r-2xl shadow-card flex items-center justify-between">
+                <div>
+                    <span class="text-slate-500 text-xs font-bold uppercase tracking-wider">Critical</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-0.5">Red Light</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" x2="12" y1="8" y2="12" />
+                        <line x1="12" x2="12.01" y1="16" y2="16" />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+
+</html>
