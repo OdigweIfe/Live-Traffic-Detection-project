@@ -20,7 +20,7 @@
                 </svg>
                 Dashboard
             </a>
-            <a href="#"
+            <a href="{{ url_for('summary.view_history') }}"
                 class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -42,7 +42,7 @@
                 </svg>
                 Uploads
             </a>
-            <a href="#"
+            <a href="{{ url_for('admin.admin_dashboard') }}"
                 class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-soft rounded-xl transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -90,7 +90,7 @@
                 </p>
             </div>
             <div class="flex gap-3">
-                <button
+                <button onclick="window.print()"
                     class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

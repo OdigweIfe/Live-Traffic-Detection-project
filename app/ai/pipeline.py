@@ -6,6 +6,7 @@ from app.ai.red_light import RedLightSystem
 from app.ai.speed import SpeedSystem
 from app.ai.lane import LaneSystem
 from app.ai.anpr import ANPR_System
+from app.ai.vehicle_tracker import VehicleTracker
 from app.utils.video import save_frame
 import os
 import uuid
@@ -22,6 +23,7 @@ class VideoPipeline:
         self.speed = SpeedSystem()
         self.lane = LaneSystem()
         self.anpr = ANPR_System()
+        self.tracker = VehicleTracker(iou_threshold=0.3, max_missing_frames=10)
         
         # Load ROIs from config if available
         # self.red_light.set_roi(config.STOP_LINE_ROI)
@@ -54,23 +56,24 @@ class VideoPipeline:
             # 2. Detect vehicles
             detections = self.detector.detect(frame)
             
-            for det in detections:
-                bbox = det['bbox']
-                cls_name = det['class_name']
+            # Update tracker (VehicleTracker takes raw detections list directly)
+            # Detections format: [{'bbox': [x1,y1,x2,y2], 'class_name': 'car', 'confidence': 0.8}, ...]
+            tracked_objects = self.tracker.update(detections, frame_count)
+            
+            for obj in tracked_objects:
+                object_id = obj['id']
+                bbox = obj['bbox']
+                cls_name = obj['class_name']
                 
-                # Check Red Light Violation
-                if self.red_light.check_violation(bbox, signal_state):
-                    self._log_violation(frame, det, "Red Light Violation", signal_state=signal_state)
-                    violations_count += 1
-                    continue # Skip other checks if already violated?
-                    
-                # Estimate Speed & Check Violation
-                # Need object tracking for this. For MUS, this is a placeholder hook.
-                # speed = self.speed.estimate_speed(id, center, frame_count)
-                # if speed > LIMIT: log_violation...
-                
-                # Check Lane Violation
-                # if self.lane.check_violation(id, center): log_violation...
+                # Check Red Light Violation using REAL ID
+                if self.red_light.check_violation(object_id, bbox, signal_state):
+                     # Construct a detection dict for the logger
+                     det_for_log = {'bbox': bbox, 'class_name': cls_name, 'confidence': obj.get('confidence', 0.0)}
+                     self._log_violation(frame, det_for_log, "Red Light Violation", signal_state=signal_state)
+                     violations_count += 1
+                     continue
+            
+            # Fallback for detections that weren't tracked (optional, usually skipped)
             
             # Optimization: Skip frames?
             # if frame_count % 2 != 0: continue

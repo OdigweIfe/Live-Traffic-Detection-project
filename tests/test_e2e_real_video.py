@@ -4,6 +4,11 @@ Tests the complete pipeline: video processing, detection, violation logging.
 """
 import cv2
 import os
+import sys
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
 from app import create_app, db
 from app.ai.pipeline import VideoPipeline
 from app.models import Violation
@@ -19,7 +24,8 @@ def test_real_video():
         # Create tables
         db.create_all()
         
-        video_path = 'test_data/traffic_video_modified.mp4'
+        # Use the video we just calibrated
+        video_path = 'test_data/traffic_cam_04.mp4'
         
         if not os.path.exists(video_path):
             print(f"❌ Video not found: {video_path}")

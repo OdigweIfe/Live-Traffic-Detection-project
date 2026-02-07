@@ -139,7 +139,7 @@
 </div>
 
 <!-- Socket.IO Client -->
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js"></script>
 
 <script>
     const canvas = document.getElementById('video-canvas');
@@ -205,7 +205,6 @@
         uniqueCount.textContent = data.unique_vehicles || 0;
         violationCount.textContent = data.total_violations || 0;
 
-        signalState.textContent = data.signal_state.toUpperCase();
         signalState.textContent = data.signal_state.toUpperCase();
         signalState.className = `text-3xl font-black ${data.signal_state === 'red' ? 'text-red-500' : data.signal_state === 'green' ? 'text-emerald-500' : 'text-slate-900'}`;
 
