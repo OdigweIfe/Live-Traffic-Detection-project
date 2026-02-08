@@ -58,3 +58,5 @@ models/yolov8n.pt
 # Logs
 *.log
 .agent/
+
+node_modules/

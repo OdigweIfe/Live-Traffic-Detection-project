@@ -27,12 +27,15 @@ TrafficAI is an automated traffic monitoring system that uses Computer Vision (Y
 - **AI/ML**: PyTorch, Ultralytics YOLOv8, OpenCV
 - **OCR**: PaddleOCR, EasyOCR
 - **Database**: SQLite (SQLAlchemy ORM) with Flask-Migrate for migrations
-- **Frontend**: HTML5, Tailwind CSS/Bootstrap
+- **Frontend**: HTML5, Tailwind CSS v4 (via PostCSS)
+
 - **Testing**: pytest
 
 ## Prerequisites
 
 - Python 3.10 or higher
+- Node.js v18+ (for frontend build)
+- pnpm (recommended) or npm
 - Git
 - (Optional) CUDA-capable GPU for faster processing
 
@@ -58,7 +61,12 @@ brew install python@3.10
 
 ## 🚀 Quick Start (One-Click Setup)
 
-Get the project running in minutes using our automated setup scripts.
+Get the project running in minutes using our automated setup scripts. These scripts handle everything:
+1. Creating a Python virtual environment.
+2. Installing backend dependencies.
+3. **Installing frontend dependencies (Tailwind CSS v4).**
+4. **Building static assets.**
+
 
 ### Windows
 ```powershell
@@ -110,7 +118,23 @@ pip install -r requirements.txt
 
 **Note**: For GPU support with PyTorch, visit [pytorch.org](https://pytorch.org/get-started/locally/) to install the CUDA version.
 
-### 4. Download YOLO models
+### 4. Frontend Setup (New)
+
+The project uses Tailwind CSS v4. You need to install dependencies and build the styles.
+
+```bash
+# Install dependencies (pnpm recommended)
+pnpm install
+# OR
+npm install
+
+# Build CSS
+pnpm run build:css
+# OR
+npm run build:css
+```
+
+### 5. Download YOLO models
 
 The application requires the following model files:
 
@@ -320,6 +344,13 @@ kill -9 <PID>
 pip uninstall torch torchvision
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```
+
+### 7. Frontend / Tailwind Issues
+
+#### Styles not applying or "input.css not found"
+- Ensure you have run `pnpm install` and `pnpm run build:css`.
+- Check `app/static/css/output.css` exists.
+- If getting `Cannot find module`, delete `node_modules` and re-run `pnpm install`.
 
 ### Getting Help
 

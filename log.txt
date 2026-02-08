@@ -1,0 +1,56 @@
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🎯 PRE-CAPTURE: Scanning plate for Vehicle 41 (in detection zone)...
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ No plate text detected
+🎯 PRE-CAPTURE: Scanning plate for Vehicle 41 (in detection zone)...
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ No plate text detected
+❌ Client disconnected: IrD-PxWEzL2V4ubSAAAB
+🎯 PRE-CAPTURE: Scanning plate for Vehicle 41 (in detection zone)...
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ No plate text detected
+✅ Video saved to: C:\CreativeOS\01_Projects\Clients\Final Yeah Projects 2026\2026-02-05_Live-Traffic-Detection-project\app\static\processed\processed_8ad5c1d1-5039-436c-b9e0-61b6211867b9_traffic_cam_04.mp4
+✅ Processing complete: 45 vehicles, 31 violations
+127.0.0.1 - - [07/Feb/2026 09:48:21] "GET /drawer.css.map HTTP/1.1" 404 -
+[2026-02-07 09:48:21,457] [    INFO] _internal.py:97 - 127.0.0.1 - - [07/Feb/2026 09:48:21] "GET /drawer.css.map HTTP/1.1" 404 -
+127.0.0.1 - - [07/Feb/2026 09:48:21] "GET /socket.io/?EIO=4&transport=websocket&sid=9ZLWDCxyP6Y57L9vAAAA HTTP/1.1" 200 -
+[2026-02-07 09:48:21,902] [    INFO] _internal.py:97 - 127.0.0.1 - - [07/Feb/2026 09:48:21] "GET /socket.io/?EIO=4&transport=websocket&sid=9ZLWDCxyP6Y57L9vAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [07/Feb/2026 09:48:23] "GET /socket.io/?EIO=4&transport=polling&t=PmtIRHM HTTP/1.1" 200 -
+[2026-02-07 09:48:23,151] [    INFO] _internal.py:97 - 127.0.0.1 - - [07/Feb/2026 09:48:23] "GET /socket.io/?EIO=4&transport=polling&t=PmtIRHM HTTP/1.1" 200 -
+✅ Client connected: PFtD6BgNHuSbNlNkAAAD
+127.0.0.1 - - [07/Feb/2026 09:48:23] "POST /socket.io/?EIO=4&transport=polling&t=PmtIRHy&sid=AJo-j9vzNvTJa6PzAAAC HTTP/1.1" 200 -
+[2026-02-07 09:48:23,216] [    INFO] _internal.py:97 - 127.0.0.1 - - [07/Feb/2026 09:48:23] "POST /socket.io/?EIO=4&transport=polling&t=PmtIRHy&sid=AJo-j9vzNvTJa6PzAAAC HTTP/1.1" 200 -
+127.0.0.1 - - [07/Feb/2026 09:48:23] "GET /socket.io/?EIO=4&transport=polling&t=PmtIRH-&sid=AJo-j9vzNvTJa6PzAAAC HTTP/1.1" 200 -
+[2026-02-07 09:48:23,221] [    INFO] _internal.py:97 - 127.0.0.1 - - [07/Feb/2026 09:48:23] "GET /socket.io/?EIO=4&transport=polling&t=PmtIRH-&sid=AJo-j9vzNvTJa6PzAAAC HTTP/1.1" 200 -
+📹 Processing request for video: C:\CreativeOS\01_Projects\Clients\Final Yeah Projects 2026\2026-02-05_Live-Traffic-Detection-project\app/static/uploads\8ad5c1d1-5039-436c-b9e0-61b6211867b9_traffic_cam_04.mp4
+🎬 Starting video processing thread
+✅ Processing thread started for session PFtD6BgNHuSbNlNkAAAD
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+📼 Recording processed video to: processed_8ad5c1d1-5039-436c-b9e0-61b6211867b9_traffic_cam_04.mp4
+C:\CreativeOS\01_Projects\Clients\Final Yeah Projects 2026\2026-02-05_Live-Traffic-Detection-project\venv\Lib\site-packages\ultralytics\nn\tasks.py:567: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  return torch.load(file, map_location='cpu'), file  # load
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR...
+Creating model: ('PP-OCRv5_server_det', None)
+Model files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\johno\.paddlex\official_models\PP-OCRv5_server_det`.
+I0207 09:48:24.363785 13912 onednn_context.cc:81] oneDNN v3.6.2
+Creating model: ('en_PP-OCRv5_mobile_rec', None)
+Model files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\johno\.paddlex\official_models\en_PP-OCRv5_mobile_rec`.
+✅ PaddleOCR loaded successfully!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🎯 PRE-CAPTURE: Scanning plate for Vehicle 4 (in detection zone)...
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ No plate text detected
+🎯 PRE-CAPTURE: Scanning plate for Vehicle 4 (in detection zone)...
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)
+
+⚠️ PaddleOCR error: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAAttribute>]  (at ..\paddle\fluid\framework\new_executor\instruction\onednn\onednn_instruction.cc:118)

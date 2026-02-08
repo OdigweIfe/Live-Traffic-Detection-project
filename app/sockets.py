@@ -13,7 +13,7 @@ Handles:
 - Speed Estimation
 """
 from flask import request, current_app
-from flask_socketio import emit
+from flask_socketio import emit, join_room
 from app import socketio, db
 from app.models import Violation
 import cv2
@@ -23,9 +23,12 @@ import threading
 import json
 import numpy as np
 from datetime import datetime
+import hashlib
 
 # Global dictionary to track active processing sessions
-processing_sessions = {}
+# Key: video_path, Value: { 'room_id': str, 'stop': bool, 'progress': int }
+active_video_sessions = {}
+processing_sessions = {}  # Legacy: Keep for sid tracking if needed, but primarily use active_video_sessions
 SPEED_LIMIT = 60.0  # Speed limit in km/h
 
 
@@ -64,9 +67,26 @@ def handle_start_processing(data):
         print(f"❌ {error_msg}")
         emit('error', {'message': error_msg})
         return
+
+    # Create a consistent room ID for this video
+    room_id = hashlib.md5(video_path.encode()).hexdigest()
+    join_room(room_id)
+    print(f"🔗 Client {sid} joined room {room_id}")
     
-    processing_sessions[sid] = {
-        'video_path': video_path,
+    # Check if already processing this video
+    if video_path in active_video_sessions:
+        existing = active_video_sessions[video_path]
+        if not existing.get('stop', False):
+            print(f"🔄 Resuming existing session for {video_path}")
+            emit('resume_session', {
+                'message': 'Resuming existing session',
+                'progress': existing.get('progress', 0)
+            })
+            return
+
+    # Initialize new session
+    active_video_sessions[video_path] = {
+        'room_id': room_id,
         'stop': False,
         'progress': 0
     }
@@ -77,18 +97,18 @@ def handle_start_processing(data):
     # Start processing in background thread
     thread = threading.Thread(
         target=process_video_stream,
-        args=(app, sid, video_path, roi_config_path)
+        args=(app, room_id, video_path, roi_config_path)
     )
     thread.daemon = True
     thread.start()
     
-    print(f"✅ Processing thread started for session {sid}")
+    print(f"✅ Processing thread started for room {room_id}")
     emit('processing_started', {'message': 'Video processing started'})
 
 
-def process_video_stream(app, sid, video_path, roi_config_path=None):
+def process_video_stream(app, room_id, video_path, roi_config_path=None):
     """Process video and stream frames with vehicle tracking."""
-    print(f"🎬 Starting video processing thread")
+    print(f"🎬 Starting video processing thread for room {room_id}")
     
     with app.app_context():
         try:
@@ -142,7 +162,7 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 'width': width,
                 'height': height,
                 'duration': total_frames / fps if fps > 0 else 0
-            }, room=sid)
+            }, room=room_id)
             
             frame_idx = 0
             pending_violations = {}  # Queue for deferred violation saving
@@ -226,7 +246,7 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 return False
             
             while cap.isOpened():
-                if processing_sessions.get(sid, {}).get('stop', False):
+                if video_path in active_video_sessions and active_video_sessions[video_path].get('stop', False):
                     break
                 
                 ret, frame = cap.read()
@@ -371,7 +391,11 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                     'unique_vehicles': stats['total_unique_vehicles'],
                     'total_violations': stats['total_violations'],
                     'progress': progress
-                }, room=sid)
+                }, room=room_id)
+                
+                # Update progress in session
+                if video_path in active_video_sessions:
+                    active_video_sessions[video_path]['progress'] = progress
                 
                 frame_idx += 1
                 
@@ -419,17 +443,17 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 'unique_vehicles': final_stats['total_unique_vehicles'],
                 'processed_video': processed_filename,
                 'message': 'Video processing complete!'
-            }, room=sid)
+            }, room=room_id)
             
             print(f"✅ Processing complete: {final_stats['total_unique_vehicles']} vehicles, {final_stats['total_violations']} violations")
             
         except Exception as e:
             import traceback
             traceback.print_exc()
-            socketio.emit('error', {'message': str(e)}, room=sid)
+            socketio.emit('error', {'message': str(e)}, room=room_id)
         finally:
-            if sid in processing_sessions:
-                del processing_sessions[sid]
+            if video_path in active_video_sessions:
+                del active_video_sessions[video_path]
 
 
 def draw_roi_zones(frame, roi_config):

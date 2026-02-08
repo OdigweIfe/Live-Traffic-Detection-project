@@ -24,7 +24,20 @@ Write-Host "Activating venv..."
 Write-Host "⬇️ Installing dependencies..." -ForegroundColor Yellow
 pip install -r requirements.txt
 
-# 5. Database Setup
+# 5. Frontend Setup
+Write-Host "🎨 Setting up frontend..." -ForegroundColor Yellow
+if (Get-Command "pnpm" -ErrorAction SilentlyContinue) {
+    pnpm install
+    pnpm run build:css
+} elseif (Get-Command "npm" -ErrorAction SilentlyContinue) {
+    Write-Host "⚠️ pnpm not found, using npm..." -ForegroundColor Yellow
+    npm install
+    npm run build:css
+} else {
+    Write-Warning "❌ Node.js/pnpm not found. CSS build skipped. Install Node.js and run 'pnpm install && pnpm run build:css'"
+}
+
+# 6. Database Setup
 Write-Host "🗄️ Setting up database..." -ForegroundColor Yellow
 $env:FLASK_APP = "run.py"
 

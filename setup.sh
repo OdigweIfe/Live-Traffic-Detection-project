@@ -26,7 +26,20 @@ echo "✅ Activated virtual environment."
 echo "⬇️ Installing dependencies..."
 pip install -r requirements.txt
 
-# 5. Database Setup
+# 5. Frontend Setup
+echo "🎨 Setting up frontend..."
+if command -v pnpm &> /dev/null; then
+    pnpm install
+    pnpm run build:css
+elif command -v npm &> /dev/null; then
+    echo "⚠️ pnpm not found, using npm..."
+    npm install
+    npm run build:css
+else
+    echo "❌ Node.js/pnpm not found. CSS build skipped."
+fi
+
+# 6. Database Setup
 echo "🗄️ Setting up database..."
 export FLASK_APP=run.py
 if [ ! -d "migrations" ]; then
