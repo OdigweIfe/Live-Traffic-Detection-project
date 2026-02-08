@@ -96,11 +96,20 @@ from ultralytics import YOLO
 class VehicleDetector:
     def __init__(self, model_path: str):
         self.model = YOLO(model_path)
-        self.model.to('cpu')  # or 'cuda' if GPU available
+        # Select device based on configuration
+        use_gpu_env = os.environ.get('USE_GPU', 'auto').lower()
+        cuda_available = torch.cuda.is_available()
+        if use_gpu_env == 'true':
+            self.device = 'cuda'
+        elif use_gpu_env == 'auto':
+            self.device = 'cuda' if cuda_available else 'cpu'
+        else:
+            self.device = 'cpu'
+        self.model.to(self.device)
     
     @torch.no_grad()
     def detect(self, frame: np.ndarray) -> List[Detection]:
-        results = self.model(frame)
+        results = self.model(frame, device=self.device)
         return self._parse_results(results)
 ```
 
@@ -227,7 +236,15 @@ def test_violation_api(client):
 3. **Caching:** Cache ROI configurations to avoid reloading.
 4. **GPU Acceleration:** Use Google Colab for training. For inference, detect GPU availability:
    ```python
-   device = 'cuda' if torch.cuda.is_available() else 'cpu'
+   # Select device based on configuration
+   use_gpu_env = os.environ.get('USE_GPU', 'auto').lower()
+   cuda_available = torch.cuda.is_available()
+   if use_gpu_env == 'true':
+       device = 'cuda'
+   elif use_gpu_env == 'auto':
+       device = 'cuda' if cuda_available else 'cpu'
+   else:
+       device = 'cpu'
    ```
 
 ---

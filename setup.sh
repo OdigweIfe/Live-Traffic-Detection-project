@@ -26,6 +26,22 @@ echo "✅ Activated virtual environment."
 echo "⬇️ Installing dependencies..."
 pip install -r requirements.txt
 
+# 4.1 GPU Support Check (NVIDIA)
+if command -v nvidia-smi &> /dev/null; then
+    echo "🎮 NVIDIA GPU detected."
+    read -p "   Install GPU support for PaddleOCR? (Y/n) " install_gpu
+    install_gpu=${install_gpu:-Y}
+    
+    if [[ "$install_gpu" =~ ^[Yy]$ ]]; then
+        echo "⬇️ Installing PaddlePaddle GPU..."
+        pip uninstall -y paddlepaddle
+        pip install paddlepaddle-gpu
+        echo "✅ PaddlePaddle GPU installed."
+    else
+        echo "   Skipping GPU installation."
+    fi
+fi
+
 # 5. Frontend Setup
 echo "🎨 Setting up frontend..."
 if command -v pnpm &> /dev/null; then

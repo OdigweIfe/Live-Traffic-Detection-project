@@ -58,6 +58,7 @@ This orchestrator session coordinates the completion of the **TrafficAI** traffi
 | 3 | 03_improve_coverage.task.md | ✅ Complete | /mode-code | P1 |
 | 4 | 04_ui_polish.task.md | ✅ Complete | /mode-code | P1 |
 | 5 | 05_walkthrough.task.md | ✅ Complete | /mode-review | P2 |
+| 6 | 09_progress_bar.task.md | ✅ Complete | /mode-code | P1 |
 
 ---
 

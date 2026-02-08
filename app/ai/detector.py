@@ -35,8 +35,19 @@ class VehicleDetector:
             except Exception as e:
                 print(f"⚠️ Plate model download failed: {e}")
         
-        # Select device
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # Select device based on configuration
+        use_gpu_env = os.environ.get('USE_GPU', 'auto').lower()
+        cuda_available = torch.cuda.is_available()
+        
+        if use_gpu_env == 'true':
+            self.device = 'cuda'
+        elif use_gpu_env == 'auto':
+            self.device = 'cuda' if cuda_available else 'cpu'
+        else:
+            self.device = 'cpu'
+            
+        print(f"⚙️ Vehicle Detector using device: {self.device}")
+        
         self.model.to(self.device)
         if self.plate_model:
             self.plate_model.to(self.device)

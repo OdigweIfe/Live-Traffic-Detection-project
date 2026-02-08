@@ -380,7 +380,7 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
                 frame_base64 = base64.b64encode(buffer).decode('utf-8')
                 
                 # Calculate progress
-                progress = int((frame_idx / total_frames) * 100)
+                progress = int(((frame_idx + 1) / total_frames) * 100) if total_frames > 0 else 0
                 
                 # Send frame to client
                 socketio.emit('frame', {

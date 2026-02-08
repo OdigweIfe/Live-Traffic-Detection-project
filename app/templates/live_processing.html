@@ -149,6 +149,7 @@
     const ctx = canvas.getContext('2d');
     const loadingOverlay = document.getElementById('loading-overlay');
     const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
     const frameCount = document.getElementById('frame-count');
     const vehicleCount = document.getElementById('vehicle-count');
     const uniqueCount = document.getElementById('unique-count');
@@ -230,13 +231,16 @@
         signalState.className = `text-3xl font-black ${data.signal_state === 'red' ? 'text-red-500' : data.signal_state === 'green' ? 'text-emerald-500' : 'text-slate-900'}`;
 
         // Update progress
-        progressBar.style.width = data.progress + '%';
-        const progressText = document.getElementById('progress-text');
+        if (progressBar) progressBar.style.width = data.progress + '%';
         if (progressText) progressText.textContent = data.progress + '%';
     });
 
     socket.on('processing_complete', (data) => {
         console.log('Processing complete:', data);
+        
+        // Ensure progress is at 100%
+        if (progressBar) progressBar.style.width = '100%';
+        if (progressText) progressText.textContent = '100%';
         
         // Stop timer
         if (timerInterval) clearInterval(timerInterval);
@@ -262,6 +266,11 @@
     socket.on('resume_session', (data) => {
         console.log('Resuming:', data);
         showStatus(`🔄 Resumed at ${data.progress}%`, 'info');
+        
+        // Update progress bar on resume
+        if (progressBar) progressBar.style.width = data.progress + '%';
+        const progressText = document.getElementById('progress-text');
+        if (progressText) progressText.textContent = data.progress + '%';
     });
 
     function showStatus(message, type) {

@@ -1,5 +1,10 @@
 # PaddlePaddle environment fixes (must be set before any paddle imports)
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 os.environ['FLAGS_use_mkldnn'] = '0'      # Disable broken MKLDNN optimization
 os.environ['ONEDNN_MAX_CPU_ISA'] = 'SSE42'  # Forces a more stable instruction set
 os.environ['FLAGS_enable_pir_api'] = '0'  # Use stable executor

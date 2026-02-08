@@ -134,7 +134,44 @@ pnpm run build:css
 npm run build:css
 ```
 
-### 5. Download YOLO models
+
+### 5. GPU Support (Optional)
+
+To enable GPU acceleration (recommended for real-time processing), you must install the CUDA-enabled version of PyTorch. **This supports both CPU and GPU modes**.
+
+1.  **Install PyTorch (CUDA 12.1)**:
+    ```bash
+    # Uninstall default CPU version first
+    pip uninstall torch torchvision torchaudio
+
+    # Install GPU version
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+    ```
+
+2.  **PaddleOCR GPU (Optional)**:
+    For faster license plate recognition, you can install the GPU-optimized version of PaddlePaddle.
+    
+    **Note**: Our automated setup scripts (`setup.ps1` or `setup.sh`) will automatically detect your NVIDIA GPU and offer to install this for you.
+    
+    To install manually:
+    ```bash
+    pip uninstall paddlepaddle
+    pip install paddlepaddle-gpu
+    ```
+    *(Note: Check paddlepaddle.org.cn for specific CUDA version commands if needed)*
+
+3.  **Switching Modes**:
+    You can switch between CPU and GPU instantly by editing your `.env` file:
+    ```ini
+    USE_GPU=true  # Force GPU
+    # OR
+    USE_GPU=false # Force CPU
+    # OR
+    USE_GPU=auto  # Auto-detect (Default)
+    ```
+
+### 6. Download YOLO models
+
 
 The application requires the following model files:
 
@@ -147,7 +184,8 @@ The application requires the following model files:
   - **Status**: Included locally in `models/` directory. No download required if cloning full repo.
   - **Path**: `models/license_plate_detector.pt`
 
-### 5. Configure environment
+### 7. Configure environment
+
 
 ```bash
 cp .env.example .env
@@ -156,9 +194,10 @@ cp .env.example .env
 Edit `.env` and configure:
 - `SECRET_KEY`: Change for production
 - `PADDLE_OCR_ENABLED`: Enable PaddleOCR (true/false)
-- `DEVICE`: Set to `"cuda"` for GPU or `"cpu"` for CPU
+- `USE_GPU`: Set to `"true"`, `"false"`, or `"auto"` (default)
 
-### 6. Initialize the database
+### 8. Initialize the database
+
 
 ```bash
 flask db init
@@ -259,7 +298,7 @@ pytest --cov=app  # With coverage report
 | `DATABASE_URI` | Database connection | `sqlite:///instance/trafficai.db` |
 | `FLASK_APP` | Flask application entry | `run.py` |
 | `FLASK_ENV` | Flask environment | `development` |
-| `DEVICE` | Processing device (cuda/cpu) | `cpu` |
+| `USE_GPU` | Processing device (true/false/auto) | `auto` |
 | `MAX_CONTENT_LENGTH` | Max upload size (bytes) | `104857600` |
 | `UPLOAD_FOLDER` | Upload directory | `app/static/uploads` |
 
@@ -292,7 +331,7 @@ RuntimeError: CUDA out of memory
 ```
 
 **Solution**:
-- Set `DEVICE=cpu` in `.env`
+- Set `USE_GPU=false` in `.env`
 - Reduce video batch size
 - Use a smaller YOLO model
 

@@ -10,6 +10,7 @@ class Config:
     UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app/static/uploads')
     VIOLATIONS_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app/static/violations')
     MAX_CONTENT_LENGTH = 500 * 1024 * 1024  # 500MB max upload
+    USE_GPU = os.environ.get('USE_GPU', 'auto')  # 'auto', 'true', or 'false'
 
 class DevelopmentConfig(Config):
     DEBUG = True
