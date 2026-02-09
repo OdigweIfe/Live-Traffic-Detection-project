@@ -2,6 +2,20 @@ from ultralytics import YOLO
 import torch
 import os
 
+# PyTorch 2.6+ Security fix for loading Ultralytics models
+try:
+    if hasattr(torch.serialization, 'add_safe_globals'):
+        import ultralytics.nn.tasks
+        torch.serialization.add_safe_globals([
+            ultralytics.nn.tasks.DetectionModel,
+            ultralytics.nn.tasks.SegmentationModel,
+            ultralytics.nn.tasks.PoseModel,
+            ultralytics.nn.tasks.ClassificationModel,
+            ultralytics.nn.tasks.OBBModel
+        ])
+except Exception:
+    pass
+
 class VehicleDetector:
     def __init__(self, model_path='models/yolov8n.pt', plate_model_path='models/license_plate_detector.pt'):
         """

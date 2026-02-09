@@ -11,6 +11,10 @@ class Config:
     VIOLATIONS_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app/static/violations')
     MAX_CONTENT_LENGTH = 500 * 1024 * 1024  # 500MB max upload
     USE_GPU = os.environ.get('USE_GPU', 'auto')  # 'auto', 'true', or 'false'
+    
+    # Traffic Analysis Configuration
+    SPEED_LIMIT = float(os.environ.get('SPEED_LIMIT', 60.0))  # km/h
+    PIXELS_PER_METER = float(os.environ.get('PIXELS_PER_METER', 40.0))  # Calibration value
 
 class DevelopmentConfig(Config):
     DEBUG = True

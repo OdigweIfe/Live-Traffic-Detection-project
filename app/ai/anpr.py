@@ -14,6 +14,21 @@ os.environ.setdefault('FLAGS_enable_pir_api', '0')
 os.environ.setdefault('PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK', 'True')
 os.environ.setdefault('PDX_DISABLE_MODEL_SOURCE_CHECK', 'True')
 
+import torch
+# PyTorch 2.6+ Security fix for loading Ultralytics models
+try:
+    if hasattr(torch.serialization, 'add_safe_globals'):
+        import ultralytics.nn.tasks
+        torch.serialization.add_safe_globals([
+            ultralytics.nn.tasks.DetectionModel,
+            ultralytics.nn.tasks.SegmentationModel,
+            ultralytics.nn.tasks.PoseModel,
+            ultralytics.nn.tasks.ClassificationModel,
+            ultralytics.nn.tasks.OBBModel
+        ])
+except Exception:
+    pass
+
 # Try to import YOLO for specialized plate detection
 YOLO_AVAILABLE = False
 try:

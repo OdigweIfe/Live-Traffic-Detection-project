@@ -26,6 +26,16 @@ echo "✅ Activated virtual environment."
 echo "⬇️ Installing dependencies..."
 pip install -r requirements.txt
 
+# 4.5. Environment Configuration
+if [ ! -f ".env" ]; then
+    if [ -f ".env.example" ]; then
+        echo "📄 Creating .env from .env.example..."
+        cp .env.example .env
+    else
+        echo "⚠️ .env.example not found. Skipping .env creation."
+    fi
+fi
+
 # 4.1 GPU Support Check (NVIDIA)
 if command -v nvidia-smi &> /dev/null; then
     echo "🎮 NVIDIA GPU detected."

@@ -301,6 +301,8 @@ pytest --cov=app  # With coverage report
 | `USE_GPU` | Processing device (true/false/auto) | `auto` |
 | `MAX_CONTENT_LENGTH` | Max upload size (bytes) | `104857600` |
 | `UPLOAD_FOLDER` | Upload directory | `app/static/uploads` |
+| `SPEED_LIMIT` | Speed limit threshold in km/h | `60.0` |
+| `PIXELS_PER_METER` | Camera calibration value (pixels covering 1 meter) | `40.0` |
 
 ### ROI Configuration
 

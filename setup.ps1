@@ -24,6 +24,16 @@ Write-Host "Activating venv..."
 Write-Host "Installing dependencies from requirements.txt..."
 pip install -r requirements.txt
 
+# 4.5. Environment Configuration
+if (-not (Test-Path ".env")) {
+    if (Test-Path ".env.example") {
+        Write-Host "Creating .env from .env.example..."
+        Copy-Item ".env.example" ".env"
+    } else {
+        Write-Warning ".env.example not found. Skipping .env creation."
+    }
+}
+
 # 4.1 GPU Support Check (NVIDIA)
 Write-Host "Checking for NVIDIA GPU..."
 $videoControllers = Get-CimInstance Win32_VideoController

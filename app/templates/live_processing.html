@@ -65,7 +65,8 @@
                     <div class="flex justify-between text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
                         <div class="flex items-center gap-4">
                             <span>Analysis Progress</span>
-                            <span id="elapsed-time" class="text-slate-500 font-mono lowercase tracking-normal">00:00</span>
+                            <span id="elapsed-time"
+                                class="text-slate-500 font-mono lowercase tracking-normal">00:00</span>
                         </div>
                         <span id="progress-text">0%</span>
                     </div>
@@ -237,11 +238,11 @@
 
     socket.on('processing_complete', (data) => {
         console.log('Processing complete:', data);
-        
+
         // Ensure progress is at 100%
         if (progressBar) progressBar.style.width = '100%';
         if (progressText) progressText.textContent = '100%';
-        
+
         // Stop timer
         if (timerInterval) clearInterval(timerInterval);
 
@@ -249,7 +250,12 @@
 
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
-            window.location.href = '/dashboard';
+            // Get duration from timer
+            const duration = document.getElementById('elapsed-time').textContent;
+
+            // Redirect to summary page
+            const summaryUrl = `/summary?video=${encodeURIComponent(data.processed_video)}&unique=${data.unique_vehicles}&violations=${data.violations_detected}&duration=${encodeURIComponent(duration)}`;
+            window.location.href = summaryUrl;
         }, 3000);
     });
 
@@ -266,7 +272,7 @@
     socket.on('resume_session', (data) => {
         console.log('Resuming:', data);
         showStatus(`🔄 Resumed at ${data.progress}%`, 'info');
-        
+
         // Update progress bar on resume
         if (progressBar) progressBar.style.width = data.progress + '%';
         const progressText = document.getElementById('progress-text');

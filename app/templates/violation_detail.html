@@ -36,7 +36,8 @@
             <!-- Video Player -->
             <div class="flex-1 bg-black flex items-center justify-center relative overflow-hidden">
                 {% if violation.video_path %}
-                <video id="evidenceVideo" class="w-full h-full object-contain" controls preload="metadata">
+                <video id="evidenceVideo" class="w-full h-full object-contain" controls preload="metadata"
+                    poster="{{ url_for('static', filename=violation.image_path) if violation.image_path else '' }}">
                     <source src="{{ url_for('static', filename=violation.video_path) }}" type="video/mp4">
                     Your browser does not support video playback.
                 </video>

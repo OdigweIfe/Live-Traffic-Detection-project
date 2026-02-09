@@ -86,7 +86,9 @@ class VideoPipeline:
         Save violation to DB and disk.
         """
         # Save image
-        filename = f"vio_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}.jpg"
+        timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+        unique_id = uuid.uuid4().hex[:6]
+        filename = f"vio_{timestamp_str}_{unique_id}.jpg"
         save_path = os.path.join(self.config['VIOLATIONS_FOLDER'], filename)
         
         # Draw bounding box for context
@@ -100,6 +102,33 @@ class VideoPipeline:
         vehicle_crop = frame[y1:y2, x1:x2]
         plate_text = self.anpr.extract_text(vehicle_crop)
         
+        # Generate Video Clip
+        video_clip_path = None
+        source_video_path = kwargs.get('source_video_path')
+        video_fps = kwargs.get('video_fps', 30.0)
+        frame_number = kwargs.get('frame_number', 0)
+        
+        if source_video_path and os.path.exists(source_video_path):
+            violation_time = frame_number / video_fps if video_fps > 0 else 0
+            # Define output filename for clip
+            clip_filename = f"clip_{timestamp_str}_{unique_id}.mp4"
+            clip_full_path = os.path.join(self.config['VIOLATIONS_FOLDER'], clip_filename)
+            
+            # Extract 5s clip (2.5s before, 2.5s after)
+            try:
+                # We need to import here to avoid circular dependencies if utils imports models
+                from app.utils.video_clip import extract_clip
+                generated_clip = extract_clip(
+                    source_video_path, 
+                    self.config['VIOLATIONS_FOLDER'], 
+                    violation_time, 
+                    duration=5.0
+                )
+                if generated_clip:
+                    video_clip_path = f"violations/{generated_clip}"
+            except Exception as e:
+                print(f"Failed to generate clip: {e}")
+
         # Save to DB
         violation = Violation(
             violation_type=violation_type,
@@ -107,7 +136,10 @@ class VideoPipeline:
             license_plate=plate_text,
             image_path=f"violations/{filename}",
             location="Camera 01", # Placeholder
-            signal_state=kwargs.get('signal_state')
+            signal_state=kwargs.get('signal_state'),
+            video_path=video_clip_path, # Save the CLIP path, not the full video
+            frame_number=frame_number,
+            video_fps=video_fps
         )
         db.session.add(violation)
         db.session.commit()

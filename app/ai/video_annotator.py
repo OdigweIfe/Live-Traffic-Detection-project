@@ -146,6 +146,44 @@ class VideoAnnotator:
         print(f"✅ Annotated video saved: {output_path}")
         print(f"   Total violations detected: {len(violations)}")
         
+        # Convert to H.264 for web playback availability
+        try:
+            import subprocess
+            import os
+            
+            temp_output = output_path.replace('.mp4', '_temp.mp4')
+            os.rename(output_path, temp_output)
+            
+            # Use ffmpeg to convert to H.264 (avc1)
+            # -movflags faststart moves metadata to front for faster web playback
+            cmd = [
+                'ffmpeg', '-y',
+                '-i', temp_output,
+                '-c:v', 'libx264',
+                '-preset', 'fast',
+                '-crf', '23', 
+                '-c:a', 'aac',
+                '-movflags', 'faststart',
+                output_path
+            ]
+            
+            print("🔄 Converting processed video to H.264 for web playback...")
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            
+            # Clean up temp file
+            if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
+                os.remove(temp_output)
+                print("✅ Conversion complete.")
+            else:
+                # Restore if failed
+                os.rename(temp_output, output_path)
+                print("⚠️ Conversion failed, restored original.")
+                
+        except Exception as e:
+            print(f"⚠️ Could not convert video to H.264: {e}")
+            if os.path.exists(temp_output):
+                os.rename(temp_output, output_path)
+        
         return {
             'frames_processed': frame_idx,
             'violations_detected': len(violations),

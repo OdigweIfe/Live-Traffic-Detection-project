@@ -19,12 +19,14 @@ def create_app(config_name='default'):
     from app.routes import upload_bp, violations_bp, dashboard_bp
     from app.routes.summary import summary_bp
     from app.routes.admin import admin_bp
+    from app.routes.reports import reports_bp
 
     app.register_blueprint(upload_bp)
     app.register_blueprint(violations_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(summary_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(reports_bp)
     
     # Import socket handlers to register events
     from app import sockets
