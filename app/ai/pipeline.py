@@ -6,6 +6,7 @@ from app.ai.red_light import RedLightSystem
 from app.ai.speed import SpeedSystem
 from app.ai.lane import LaneSystem
 from app.ai.anpr import ANPR_System
+from app.ai.vehicle_tracker import VehicleTracker
 from app.utils.video import save_frame
 import os
 import uuid
@@ -22,6 +23,7 @@ class VideoPipeline:
         self.speed = SpeedSystem()
         self.lane = LaneSystem()
         self.anpr = ANPR_System()
+        self.tracker = VehicleTracker(iou_threshold=0.3, max_missing_frames=10)
         
         # Load ROIs from config if available
         # self.red_light.set_roi(config.STOP_LINE_ROI)
@@ -54,23 +56,24 @@ class VideoPipeline:
             # 2. Detect vehicles
             detections = self.detector.detect(frame)
             
-            for det in detections:
-                bbox = det['bbox']
-                cls_name = det['class_name']
+            # Update tracker (VehicleTracker takes raw detections list directly)
+            # Detections format: [{'bbox': [x1,y1,x2,y2], 'class_name': 'car', 'confidence': 0.8}, ...]
+            tracked_objects = self.tracker.update(detections, frame_count)
+            
+            for obj in tracked_objects:
+                object_id = obj['id']
+                bbox = obj['bbox']
+                cls_name = obj['class_name']
                 
-                # Check Red Light Violation
-                if self.red_light.check_violation(bbox, signal_state):
-                    self._log_violation(frame, det, "Red Light Violation", signal_state=signal_state)
-                    violations_count += 1
-                    continue # Skip other checks if already violated?
-                    
-                # Estimate Speed & Check Violation
-                # Need object tracking for this. For MUS, this is a placeholder hook.
-                # speed = self.speed.estimate_speed(id, center, frame_count)
-                # if speed > LIMIT: log_violation...
-                
-                # Check Lane Violation
-                # if self.lane.check_violation(id, center): log_violation...
+                # Check Red Light Violation using REAL ID
+                if self.red_light.check_violation(object_id, bbox, signal_state):
+                     # Construct a detection dict for the logger
+                     det_for_log = {'bbox': bbox, 'class_name': cls_name, 'confidence': obj.get('confidence', 0.0)}
+                     self._log_violation(frame, det_for_log, "Red Light Violation", signal_state=signal_state)
+                     violations_count += 1
+                     continue
+            
+            # Fallback for detections that weren't tracked (optional, usually skipped)
             
             # Optimization: Skip frames?
             # if frame_count % 2 != 0: continue
@@ -83,7 +86,9 @@ class VideoPipeline:
         Save violation to DB and disk.
         """
         # Save image
-        filename = f"vio_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}.jpg"
+        timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+        unique_id = uuid.uuid4().hex[:6]
+        filename = f"vio_{timestamp_str}_{unique_id}.jpg"
         save_path = os.path.join(self.config['VIOLATIONS_FOLDER'], filename)
         
         # Draw bounding box for context
@@ -97,6 +102,33 @@ class VideoPipeline:
         vehicle_crop = frame[y1:y2, x1:x2]
         plate_text = self.anpr.extract_text(vehicle_crop)
         
+        # Generate Video Clip
+        video_clip_path = None
+        source_video_path = kwargs.get('source_video_path')
+        video_fps = kwargs.get('video_fps', 30.0)
+        frame_number = kwargs.get('frame_number', 0)
+        
+        if source_video_path and os.path.exists(source_video_path):
+            violation_time = frame_number / video_fps if video_fps > 0 else 0
+            # Define output filename for clip
+            clip_filename = f"clip_{timestamp_str}_{unique_id}.mp4"
+            clip_full_path = os.path.join(self.config['VIOLATIONS_FOLDER'], clip_filename)
+            
+            # Extract 5s clip (2.5s before, 2.5s after)
+            try:
+                # We need to import here to avoid circular dependencies if utils imports models
+                from app.utils.video_clip import extract_clip
+                generated_clip = extract_clip(
+                    source_video_path, 
+                    self.config['VIOLATIONS_FOLDER'], 
+                    violation_time, 
+                    duration=5.0
+                )
+                if generated_clip:
+                    video_clip_path = f"violations/{generated_clip}"
+            except Exception as e:
+                print(f"Failed to generate clip: {e}")
+
         # Save to DB
         violation = Violation(
             violation_type=violation_type,
@@ -104,7 +136,10 @@ class VideoPipeline:
             license_plate=plate_text,
             image_path=f"violations/{filename}",
             location="Camera 01", # Placeholder
-            signal_state=kwargs.get('signal_state')
+            signal_state=kwargs.get('signal_state'),
+            video_path=video_clip_path, # Save the CLIP path, not the full video
+            frame_number=frame_number,
+            video_fps=video_fps
         )
         db.session.add(violation)
         db.session.commit()

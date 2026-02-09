@@ -11,13 +11,29 @@ def view_summary():
     """View summary of a processed video."""
     video_filename = request.args.get('video')
     
-    # Load stats if available (passed as query params for now, 
-    # but ideally we'd store a JSON sidecar file with metadata)
-    stats = {
-        'unique_vehicles': request.args.get('unique', 0),
-        'total_violations': request.args.get('violations', 0),
-        'duration': request.args.get('duration', '0:00')
-    }
+    # Load stats if available (check for sidecar JSON first)
+    stats = {}
+    
+    if video_filename:
+        # Try to load sidecar JSON
+        json_filename = f"{video_filename}.json"
+        json_path = os.path.join(current_app.static_folder, 'processed', json_filename)
+        
+        if os.path.exists(json_path):
+            try:
+                with open(json_path, 'r') as f:
+                    data = json.load(f)
+                    stats = data.get('stats', {})
+            except Exception as e:
+                print(f"Error loading stats JSON: {e}")
+
+    # Fallback to query params if stats missing
+    if not stats:
+        stats = {
+            'unique_vehicles': request.args.get('unique', 0),
+            'total_violations': request.args.get('violations', 0),
+            'duration': request.args.get('duration', '0:00')
+        }
     
     return render_template('summary.html', 
                           video_filename=video_filename,

@@ -187,7 +187,7 @@ class VehicleTracker:
         pixel_dist = np.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
         real_dist_m = pixel_dist / ppm
         
-        time_elapsed_s = frames_to_use / fps
+        time_elapsed_s = (frames_to_use - 1) / fps
         
         if time_elapsed_s > 0:
             speed_mps = real_dist_m / time_elapsed_s

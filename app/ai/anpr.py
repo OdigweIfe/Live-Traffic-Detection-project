@@ -14,6 +14,21 @@ os.environ.setdefault('FLAGS_enable_pir_api', '0')
 os.environ.setdefault('PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK', 'True')
 os.environ.setdefault('PDX_DISABLE_MODEL_SOURCE_CHECK', 'True')
 
+import torch
+# PyTorch 2.6+ Security fix for loading Ultralytics models
+try:
+    if hasattr(torch.serialization, 'add_safe_globals'):
+        import ultralytics.nn.tasks
+        torch.serialization.add_safe_globals([
+            ultralytics.nn.tasks.DetectionModel,
+            ultralytics.nn.tasks.SegmentationModel,
+            ultralytics.nn.tasks.PoseModel,
+            ultralytics.nn.tasks.ClassificationModel,
+            ultralytics.nn.tasks.OBBModel
+        ])
+except Exception:
+    pass
+
 # Try to import YOLO for specialized plate detection
 YOLO_AVAILABLE = False
 try:
@@ -54,6 +69,25 @@ class ANPR_System:
         self.use_paddleocr = False
         self.use_easyocr = False
         
+        # === GPU Configuration ===
+        use_gpu_env = os.environ.get('USE_GPU', 'auto').lower()
+        cuda_available = False
+        try:
+            import torch
+            if torch.cuda.is_available():
+                cuda_available = True
+        except ImportError:
+            pass
+            
+        if use_gpu_env == 'true':
+            self.should_use_gpu = True
+        elif use_gpu_env == 'auto':
+            self.should_use_gpu = cuda_available
+        else:
+            self.should_use_gpu = False
+            
+        print(f"⚙️ ANPR GPU Mode: {'ENABLED' if self.should_use_gpu else 'DISABLED'} (Env: {use_gpu_env}, Cuda: {cuda_available})")
+        
         # === Stage 1: Plate Detection (Specialized YOLO) ===
         if YOLO_AVAILABLE:
             try:
@@ -78,14 +112,23 @@ class ANPR_System:
         # === Stage 2: OCR (PaddleOCR preferred) ===
         if PADDLEOCR_AVAILABLE:
             try:
-                print("🔄 Initializing PaddleOCR...")
-                # Initialize with PaddleOCR 3.x options
-                self.paddle_ocr = PaddleOCR(
-                    lang='en',
-                    use_doc_orientation_classify=False, 
-                    use_doc_unwarping=False, 
-                    use_textline_orientation=False
-                )
+                print(f"🔄 Initializing PaddleOCR (GPU: {self.should_use_gpu})...")
+                # Attempt initialization with use_gpu
+                try:
+                    self.paddle_ocr = PaddleOCR(
+                        lang='en',
+                        use_doc_orientation_classify=False, 
+                        use_doc_unwarping=False, 
+                        use_textline_orientation=False,
+                        use_gpu=self.should_use_gpu
+                    )
+                except TypeError as e:
+                    if "use_gpu" in str(e):
+                        print("⚠️ PaddleOCR 3.x+ detected, using standard initialization...")
+                        self.paddle_ocr = PaddleOCR(lang='en')
+                    else:
+                        raise e
+                
                 self.use_paddleocr = True
                 print("✅ PaddleOCR loaded successfully!")
             except Exception as e:
@@ -94,8 +137,8 @@ class ANPR_System:
         # Fallback to EasyOCR
         if not self.use_paddleocr and EASYOCR_AVAILABLE:
             try:
-                print("🔄 Initializing EasyOCR as fallback...")
-                self.easyocr_reader = easyocr.Reader(['en'], gpu=False)
+                print(f"🔄 Initializing EasyOCR as fallback (GPU: {self.should_use_gpu})...")
+                self.easyocr_reader = easyocr.Reader(['en'], gpu=self.should_use_gpu)
                 self.use_easyocr = True
                 print("✅ EasyOCR loaded!")
             except Exception as e:

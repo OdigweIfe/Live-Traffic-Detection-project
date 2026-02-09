@@ -13,7 +13,7 @@ Handles:
 - Speed Estimation
 """
 from flask import request, current_app
-from flask_socketio import emit
+from flask_socketio import emit, join_room
 from app import socketio, db
 from app.models import Violation
 import cv2
@@ -23,10 +23,13 @@ import threading
 import json
 import numpy as np
 from datetime import datetime
+import hashlib
 
 # Global dictionary to track active processing sessions
-processing_sessions = {}
-SPEED_LIMIT = 60.0  # Speed limit in km/h
+# Key: video_path, Value: { 'room_id': str, 'stop': bool, 'progress': int }
+active_video_sessions = {}
+processing_sessions = {}  # Legacy: Keep for sid tracking if needed, but primarily use active_video_sessions
+
 
 
 @socketio.on('connect')
@@ -64,9 +67,26 @@ def handle_start_processing(data):
         print(f"❌ {error_msg}")
         emit('error', {'message': error_msg})
         return
+
+    # Create a consistent room ID for this video
+    room_id = hashlib.md5(video_path.encode()).hexdigest()
+    join_room(room_id)
+    print(f"🔗 Client {sid} joined room {room_id}")
     
-    processing_sessions[sid] = {
-        'video_path': video_path,
+    # Check if already processing this video
+    if video_path in active_video_sessions:
+        existing = active_video_sessions[video_path]
+        if not existing.get('stop', False):
+            print(f"🔄 Resuming existing session for {video_path}")
+            emit('resume_session', {
+                'message': 'Resuming existing session',
+                'progress': existing.get('progress', 0)
+            })
+            return
+
+    # Initialize new session
+    active_video_sessions[video_path] = {
+        'room_id': room_id,
         'stop': False,
         'progress': 0
     }
@@ -77,18 +97,18 @@ def handle_start_processing(data):
     # Start processing in background thread
     thread = threading.Thread(
         target=process_video_stream,
-        args=(app, sid, video_path, roi_config_path)
+        args=(app, room_id, video_path, roi_config_path)
     )
     thread.daemon = True
     thread.start()
     
-    print(f"✅ Processing thread started for session {sid}")
+    print(f"✅ Processing thread started for room {room_id}")
     emit('processing_started', {'message': 'Video processing started'})
 
 
-def process_video_stream(app, sid, video_path, roi_config_path=None):
+def process_video_stream(app, room_id, video_path, roi_config_path=None):
     """Process video and stream frames with vehicle tracking."""
-    print(f"🎬 Starting video processing thread")
+    print(f"🎬 Starting video processing thread for room {room_id}")
     
     with app.app_context():
         try:
@@ -113,7 +133,12 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
             os.makedirs(os.path.dirname(processed_path), exist_ok=True)
             
             # Use mp4v codec (native Windows, no external library needed)
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            # Use avc1 (H.264) for better browser compatibility
+            try:
+                fourcc = cv2.VideoWriter_fourcc(*'avc1')
+            except:
+                print("⚠️ avc1 codec not found, falling back to mp4v")
+                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                 
             out = cv2.VideoWriter(processed_path, fourcc, fps, (width, height))
             print(f"📼 Recording processed video to: {processed_filename}")
@@ -142,7 +167,7 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 'width': width,
                 'height': height,
                 'duration': total_frames / fps if fps > 0 else 0
-            }, room=sid)
+            }, room=room_id)
             
             frame_idx = 0
             pending_violations = {}  # Queue for deferred violation saving
@@ -155,8 +180,8 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                     return False
                 # Get vehicle center
                 center_y = (bbox[1] + bbox[3]) // 2
-                # Detection zone: 50-150 pixels before stop line
-                return (stop_line_y - 150) < center_y < (stop_line_y - 30)
+                # Detection zone: Expand to 300px before stop line for more chances
+                return (stop_line_y - 300) < center_y < (stop_line_y - 10)
             
             # Get stop line Y coordinate for detection zone
             stop_line_y = None
@@ -226,7 +251,7 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 return False
             
             while cap.isOpened():
-                if processing_sessions.get(sid, {}).get('stop', False):
+                if video_path in active_video_sessions and active_video_sessions[video_path].get('stop', False):
                     break
                 
                 ret, frame = cap.read()
@@ -261,33 +286,11 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                     conf = vehicle['confidence']
                     vehicle_id = vehicle['id']
                     
-                    # Calculate Speed
-                    speed_kmh = tracker.calculate_speed(vehicle_id, fps=fps, ppm=40.0)
+                    SPEED_LIMIT = current_app.config['SPEED_LIMIT']
+                    PIXELS_PER_METER = current_app.config['PIXELS_PER_METER']
                     
-                    # ========= PRE-VIOLATION CAPTURE =========
-                    # Capture plates when vehicles are approaching stop line (best visibility)
-                    if vehicle_id not in plate_cache and is_in_detection_zone(bbox, stop_line_y):
-                        x1, y1, x2, y2 = bbox
-                        h, w = frame.shape[:2]
-                        x1, y1 = max(0, x1), max(0, y1)
-                        x2, y2 = min(w, x2), min(h, y2)
-                        
-                        if x2 > x1 and y2 > y1:
-                            vehicle_crop = frame[y1:y2, x1:x2]
-                            try:
-                                print(f"🎯 PRE-CAPTURE: Scanning plate for Vehicle {vehicle_id} (in detection zone)...")
-                                detected_text = anpr.extract_text(vehicle_crop)
-                                
-                                if detected_text and detected_text != "N/A" and len(detected_text) >= 4:
-                                    plate_cache[vehicle_id] = {
-                                        'plate_text': detected_text,
-                                        'captured_frame': frame_idx,
-                                        'confidence': 'high'
-                                    }
-                                    tracker.update_license_plate(vehicle_id, detected_text)
-                                    print(f"✅ PRE-CAPTURED plate for Vehicle {vehicle_id}: {detected_text}")
-                            except Exception as e:
-                                print(f"⚠️ Pre-capture error: {e}")
+                    # Calculate Speed
+                    speed_kmh = tracker.calculate_speed(vehicle_id, fps=fps, ppm=PIXELS_PER_METER)
                     
                     # Check for Red Light Violation
                     if red_light.check_violation(vehicle_id, bbox, signal_state):
@@ -304,31 +307,39 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                         
                         if frames_since_detection >= 5:
                             # Now get speed with accumulated tracking data
-                            final_speed = tracker.calculate_speed(vid, fps=fps, ppm=40.0)
+                            final_speed = tracker.calculate_speed(vid, fps=fps, ppm=PIXELS_PER_METER)
                             tracked_plate = tracker.tracked_vehicles.get(vid, {}).get('license_plate')
                             final_plate = tracked_plate if tracked_plate else pending['plate_text']
                             
                             # Save to Database
-                            try:
-                                violation = Violation(
-                                    timestamp=datetime.utcnow(),
-                                    violation_type=pending.get('violation_type', 'Red Light Violation'), # Use specific type or default
-                                    vehicle_type=pending['vehicle_type'],
-                                    license_plate=final_plate,
-                                    speed_kmh=round(final_speed, 1),
-                                    location='Main Intersection',
-                                    signal_state=pending['signal_state'],
-                                    image_path=pending.get('image_path', f"violations/violation_{vid}.jpg"),
-                                    frame_number=pending['detected_frame'],
-                                    video_fps=pending.get('video_fps'),
-                                    video_path=pending.get('video_path')
-                                )
-                                db.session.add(violation)
-                                db.session.commit()
-                                print(f"💾 Saved: {final_plate} @ {final_speed:.1f} km/h")
-                            except Exception as e:
-                                db.session.rollback()
-                                print(f"❌ Database error: {e}")
+                            # Save to Database ONLY if final confirmed speed is still valid (or if it's not a speed violation)
+                            # This prevents "Ghost Violations" where a momentary glitch triggers it but the smoothed speed is lower
+                            is_valid_violation = True
+                            if pending['violation_type'] == 'Speeding Violation' and final_speed <= SPEED_LIMIT:
+                                print(f"⚠️ Discarding Speed Violation for {final_plate}: Initial > {SPEED_LIMIT}, but Final {final_speed:.1f} <= {SPEED_LIMIT}")
+                                is_valid_violation = False
+                            
+                            if is_valid_violation:
+                                try:
+                                    violation = Violation(
+                                        timestamp=datetime.utcnow(),
+                                        violation_type=pending.get('violation_type', 'Red Light Violation'), # Use specific type or default
+                                        vehicle_type=pending['vehicle_type'],
+                                        license_plate=final_plate,
+                                        speed_kmh=round(final_speed, 1),
+                                        location='Main Intersection',
+                                        signal_state=pending['signal_state'],
+                                        image_path=pending.get('image_path', f"violations/violation_{vid}.jpg"),
+                                        frame_number=pending['detected_frame'],
+                                        video_fps=pending.get('video_fps'),
+                                        video_path=pending.get('video_path')
+                                    )
+                                    db.session.add(violation)
+                                    db.session.commit()
+                                    print(f"💾 Saved: {final_plate} @ {final_speed:.1f} km/h")
+                                except Exception as e:
+                                    db.session.rollback()
+                                    print(f"❌ Database error: {e}")
                             
                             del pending_violations[vid]
                     
@@ -360,7 +371,7 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 frame_base64 = base64.b64encode(buffer).decode('utf-8')
                 
                 # Calculate progress
-                progress = int((frame_idx / total_frames) * 100)
+                progress = int(((frame_idx + 1) / total_frames) * 100) if total_frames > 0 else 0
                 
                 # Send frame to client
                 socketio.emit('frame', {
@@ -371,7 +382,11 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                     'unique_vehicles': stats['total_unique_vehicles'],
                     'total_violations': stats['total_violations'],
                     'progress': progress
-                }, room=sid)
+                }, room=room_id)
+                
+                # Update progress in session
+                if video_path in active_video_sessions:
+                    active_video_sessions[video_path]['progress'] = progress
                 
                 frame_idx += 1
                 
@@ -410,6 +425,27 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
             cap.release()
             out.release()
             
+            # Save stats to JSON sidecar
+            json_filename = f"{processed_filename}.json"
+            json_path = os.path.join(app.static_folder, 'processed', json_filename)
+            
+            stats_data = {
+                'filename': processed_filename,
+                'stats': {
+                    'unique_vehicles': final_stats['total_unique_vehicles'],
+                    'total_violations': final_stats['total_violations'],
+                    'duration': f"{int(total_frames / fps // 60)}:{int(total_frames / fps % 60):02d}" if fps > 0 else "0:00",
+                    'processed_at': datetime.utcnow().isoformat()
+                }
+            }
+            
+            try:
+                with open(json_path, 'w') as f:
+                    json.dump(stats_data, f, indent=4)
+                print(f"📊 Stats saved to: {json_filename}")
+            except Exception as e:
+                print(f"❌ Error saving stats JSON: {e}")
+            
             print(f"✅ Video saved to: {processed_path}")
             
             # Send completion message
@@ -419,17 +455,17 @@ def process_video_stream(app, sid, video_path, roi_config_path=None):
                 'unique_vehicles': final_stats['total_unique_vehicles'],
                 'processed_video': processed_filename,
                 'message': 'Video processing complete!'
-            }, room=sid)
+            }, room=room_id)
             
             print(f"✅ Processing complete: {final_stats['total_unique_vehicles']} vehicles, {final_stats['total_violations']} violations")
             
         except Exception as e:
             import traceback
             traceback.print_exc()
-            socketio.emit('error', {'message': str(e)}, room=sid)
+            socketio.emit('error', {'message': str(e)}, room=room_id)
         finally:
-            if sid in processing_sessions:
-                del processing_sessions[sid]
+            if video_path in active_video_sessions:
+                del active_video_sessions[video_path]
 
 
 def draw_roi_zones(frame, roi_config):

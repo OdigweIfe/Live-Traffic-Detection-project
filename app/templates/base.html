@@ -5,30 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrafficAI - {% block title %}Video Analytics{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: { dark: '#0f172a' },
-                    },
-                    boxShadow: {
-                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
-                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
-                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
-                    }
-                }
-            }
-        }
-    </script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
+        }
+
+        @media print {
+
+            nav,
+            aside,
+            button,
+            .no-print {
+                display: none !important;
+            }
+
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                background: white !important;
+            }
+
+            .shadow-card,
+            .shadow-soft,
+            .shadow-float {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
+            }
         }
     </style>
 </head>
@@ -53,10 +60,10 @@
                     class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Dashboard</a>
                 <a href="{{ url_for('summary.view_history') }}"
                     class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">History</a>
+                <a href="{{ url_for('reports.index') }}"
+                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Reports</a>
                 <a href="{{ url_for('admin.admin_dashboard') }}"
                     class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Admin</a>
-                <a href="#"
-                    class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Settings</a>
                 <div
                     class="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-700 shadow-sm">
                     AD

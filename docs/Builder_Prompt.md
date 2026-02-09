@@ -199,12 +199,20 @@ import torch
 class VehicleDetector:
     def __init__(self, model_path='models/yolov8n.pt'):
         self.model = YOLO(model_path)
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # Select device based on configuration
+        use_gpu_env = os.environ.get('USE_GPU', 'auto').lower()
+        cuda_available = torch.cuda.is_available()
+        if use_gpu_env == 'true':
+            self.device = 'cuda'
+        elif use_gpu_env == 'auto':
+            self.device = 'cuda' if cuda_available else 'cpu'
+        else:
+            self.device = 'cpu'
         self.model.to(self.device)
     
     @torch.no_grad()
     def detect(self, frame):
-        results = self.model(frame, conf=0.5)
+        results = self.model(frame, conf=0.5, device=self.device)
         detections = []
         for r in results:
             for box in r.boxes:

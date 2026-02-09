@@ -63,7 +63,11 @@
                 <!-- Progress Section -->
                 <div class="mt-6 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                     <div class="flex justify-between text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
-                        <span>Analysis Progress</span>
+                        <div class="flex items-center gap-4">
+                            <span>Analysis Progress</span>
+                            <span id="elapsed-time"
+                                class="text-slate-500 font-mono lowercase tracking-normal">00:00</span>
+                        </div>
                         <span id="progress-text">0%</span>
                     </div>
                     <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -139,19 +143,33 @@
 </div>
 
 <!-- Socket.IO Client -->
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
 
 <script>
     const canvas = document.getElementById('video-canvas');
     const ctx = canvas.getContext('2d');
     const loadingOverlay = document.getElementById('loading-overlay');
     const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
     const frameCount = document.getElementById('frame-count');
     const vehicleCount = document.getElementById('vehicle-count');
     const uniqueCount = document.getElementById('unique-count');
     const violationCount = document.getElementById('violation-count');
     const signalState = document.getElementById('signal-state');
     const statusMessage = document.getElementById('status-message');
+
+    // Timer logic
+    let startTime = null;
+    let timerInterval = null;
+
+    function updateTimer() {
+        if (!startTime) return;
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+        const secs = (elapsed % 60).toString().padStart(2, '0');
+        const timerElement = document.getElementById('elapsed-time');
+        if (timerElement) timerElement.textContent = `${mins}:${secs}`;
+    }
 
     // Connect to WebSocket
     const socket = io();
@@ -183,6 +201,11 @@
     socket.on('video_info', (data) => {
         console.log('Video info:', data);
 
+        // Start timer
+        startTime = Date.now();
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+
         // Set canvas dimensions
         canvas.width = data.width;
         canvas.height = data.height;
@@ -206,22 +229,33 @@
         violationCount.textContent = data.total_violations || 0;
 
         signalState.textContent = data.signal_state.toUpperCase();
-        signalState.textContent = data.signal_state.toUpperCase();
         signalState.className = `text-3xl font-black ${data.signal_state === 'red' ? 'text-red-500' : data.signal_state === 'green' ? 'text-emerald-500' : 'text-slate-900'}`;
 
         // Update progress
-        progressBar.style.width = data.progress + '%';
-        const progressText = document.getElementById('progress-text');
+        if (progressBar) progressBar.style.width = data.progress + '%';
         if (progressText) progressText.textContent = data.progress + '%';
     });
 
     socket.on('processing_complete', (data) => {
         console.log('Processing complete:', data);
+
+        // Ensure progress is at 100%
+        if (progressBar) progressBar.style.width = '100%';
+        if (progressText) progressText.textContent = '100%';
+
+        // Stop timer
+        if (timerInterval) clearInterval(timerInterval);
+
         showStatus(`✅ Processing complete! ${data.unique_vehicles} vehicles, ${data.violations_detected} violations`, 'success');
 
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
-            window.location.href = '/dashboard';
+            // Get duration from timer
+            const duration = document.getElementById('elapsed-time').textContent;
+
+            // Redirect to summary page
+            const summaryUrl = `/summary?video=${encodeURIComponent(data.processed_video)}&unique=${data.unique_vehicles}&violations=${data.violations_detected}&duration=${encodeURIComponent(duration)}`;
+            window.location.href = summaryUrl;
         }, 3000);
     });
 
@@ -233,6 +267,16 @@
 
     socket.on('processing_started', (data) => {
         showStatus('🎬 Processing started...', 'info');
+    });
+
+    socket.on('resume_session', (data) => {
+        console.log('Resuming:', data);
+        showStatus(`🔄 Resumed at ${data.progress}%`, 'info');
+
+        // Update progress bar on resume
+        if (progressBar) progressBar.style.width = data.progress + '%';
+        const progressText = document.getElementById('progress-text');
+        if (progressText) progressText.textContent = data.progress + '%';
     });
 
     function showStatus(message, type) {

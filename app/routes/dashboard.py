@@ -50,11 +50,6 @@ def view_dashboard():
                           red_light_violations=red_light,
                           speeding_violations=speeding)
 
-@dashboard_bp.route('/violation/<int:violation_id>')
-def view_violation_detail(violation_id):
-    violation = Violation.query.get_or_404(violation_id)
-    return render_template('violation_detail.html', violation=violation)
-
 @dashboard_bp.route('/violation/<int:violation_id>/dismiss', methods=['POST'])
 def dismiss_violation(violation_id):
     """Dismiss/cancel a violation (false positive)."""

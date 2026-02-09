@@ -1,5 +1,10 @@
 # PaddlePaddle environment fixes (must be set before any paddle imports)
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 os.environ['FLAGS_use_mkldnn'] = '0'      # Disable broken MKLDNN optimization
 os.environ['ONEDNN_MAX_CPU_ISA'] = 'SSE42'  # Forces a more stable instruction set
 os.environ['FLAGS_enable_pir_api'] = '0'  # Use stable executor
@@ -16,5 +21,6 @@ def make_shell_context():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+    print(f"✅ SocketIO Async Mode: {socketio.async_mode}")
     # Use socketio.run instead of app.run for WebSocket support
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

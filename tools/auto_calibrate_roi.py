@@ -60,8 +60,18 @@ class CameraROIConfig:
         with open(filepath, 'w') as f:
             json.dump(config_data, f, indent=2)
 
+import argparse
+
+# Parse arguments
+parser = argparse.ArgumentParser(description='Auto-calibrate ROI for a given video')
+parser.add_argument('--video', type=str, required=True, help='Path to input video file')
+parser.add_argument('--output', type=str, required=True, help='Path to output JSON config file')
+args = parser.parse_args()
+
 # Path to video
-video_path = 'test_data/traffic_video_modified.mp4'
+video_path = args.video
+config_path = args.output
+visualization_path = config_path.replace('.json', '_vis.jpg')
 
 # Open video
 cap = cv2.VideoCapture(video_path)
@@ -154,7 +164,7 @@ config.set_traffic_signal_roi([
 print(f"   ✅ Traffic signal ROI: top-left corner")
 
 # Save configuration
-config_path = 'config/roi/traffic_video_modified.json'
+# config_path is already set from args
 config.save_to_file(config_path)
 print(f"\n✅ Configuration saved: {config_path}")
 
@@ -190,8 +200,8 @@ cv2.rectangle(vis_frame, (signal_x, signal_y), (signal_x + signal_w, signal_y + 
 cv2.putText(vis_frame, "SIGNAL", (signal_x, signal_y - 5), 
             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
-cv2.imwrite('config/roi/roi_visualization.jpg', vis_frame)
-print(f"✅ Saved visualization: config/roi/roi_visualization.jpg")
+cv2.imwrite(visualization_path, vis_frame)
+print(f"✅ Saved visualization: {visualization_path}")
 
 print(f"\n🎉 ROI calibration complete!")
 print(f"\n📝 Next steps:")

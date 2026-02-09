@@ -26,7 +26,46 @@ echo "✅ Activated virtual environment."
 echo "⬇️ Installing dependencies..."
 pip install -r requirements.txt
 
-# 5. Database Setup
+# 4.5. Environment Configuration
+if [ ! -f ".env" ]; then
+    if [ -f ".env.example" ]; then
+        echo "📄 Creating .env from .env.example..."
+        cp .env.example .env
+    else
+        echo "⚠️ .env.example not found. Skipping .env creation."
+    fi
+fi
+
+# 4.1 GPU Support Check (NVIDIA)
+if command -v nvidia-smi &> /dev/null; then
+    echo "🎮 NVIDIA GPU detected."
+    read -p "   Install GPU support for PaddleOCR? (Y/n) " install_gpu
+    install_gpu=${install_gpu:-Y}
+    
+    if [[ "$install_gpu" =~ ^[Yy]$ ]]; then
+        echo "⬇️ Installing PaddlePaddle GPU..."
+        pip uninstall -y paddlepaddle
+        pip install paddlepaddle-gpu
+        echo "✅ PaddlePaddle GPU installed."
+    else
+        echo "   Skipping GPU installation."
+    fi
+fi
+
+# 5. Frontend Setup
+echo "🎨 Setting up frontend..."
+if command -v pnpm &> /dev/null; then
+    pnpm install
+    pnpm run build:css
+elif command -v npm &> /dev/null; then
+    echo "⚠️ pnpm not found, using npm..."
+    npm install
+    npm run build:css
+else
+    echo "❌ Node.js/pnpm not found. CSS build skipped."
+fi
+
+# 6. Database Setup
 echo "🗄️ Setting up database..."
 export FLASK_APP=run.py
 if [ ! -d "migrations" ]; then

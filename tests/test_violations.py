@@ -40,10 +40,7 @@ def test_detect_signal_state_returns_string(red_light_system, sample_frame_red):
 
 def test_check_violation_returns_bool(red_light_system):
     """Test that violation check returns boolean."""
-    bbox = [100, 200, 150, 250]  # Sample bounding box
-    signal_state = 'red'
-    
-    result = red_light_system.check_violation(bbox, signal_state)
+    result = red_light_system.check_violation(1, bbox, signal_state)
     assert isinstance(result, bool)
 
 def test_no_violation_on_green(red_light_system):
@@ -52,7 +49,7 @@ def test_no_violation_on_green(red_light_system):
     signal_state = 'green'
     
     # Should not be a violation when light is green
-    result = red_light_system.check_violation(bbox, signal_state)
+    result = red_light_system.check_violation(1, bbox, signal_state)
     # This depends on implementation, but green should generally allow passage
 
 def test_handles_various_bbox_formats(red_light_system):
@@ -64,7 +61,7 @@ def test_handles_various_bbox_formats(red_light_system):
     ]
     
     for bbox in bboxes:
-        result = red_light_system.check_violation(bbox, 'red')
+        result = red_light_system.check_violation(1, bbox, 'red')
         assert isinstance(result, bool)
 
 
@@ -139,7 +136,7 @@ def test_get_lane_returns_int_or_none(lane_system):
     """Test that lane detection returns int or None."""
     center = (320, 240)  # Center of 640x480 frame
     
-    lane = lane_system.get_lane(center)
+    lane = lane_system.get_lane_id(center)
     assert lane is None or isinstance(lane, int)
 
 def test_check_violation_returns_bool(lane_system):
@@ -199,7 +196,7 @@ def test_violation_workflow_integration():
     
     # Check red light
     signal_state = red_light.detect_signal_state(frame)
-    red_violation = red_light.check_violation(bbox, signal_state)
+    red_violation = red_light.check_violation(1, bbox, signal_state)
     
     # Check speed
     speed.update_fps(30)

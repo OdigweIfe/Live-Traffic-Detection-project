@@ -27,12 +27,15 @@ TrafficAI is an automated traffic monitoring system that uses Computer Vision (Y
 - **AI/ML**: PyTorch, Ultralytics YOLOv8, OpenCV
 - **OCR**: PaddleOCR, EasyOCR
 - **Database**: SQLite (SQLAlchemy ORM) with Flask-Migrate for migrations
-- **Frontend**: HTML5, Tailwind CSS/Bootstrap
+- **Frontend**: HTML5, Tailwind CSS v4 (via PostCSS)
+
 - **Testing**: pytest
 
 ## Prerequisites
 
 - Python 3.10 or higher
+- Node.js v18+ (for frontend build)
+- pnpm (recommended) or npm
 - Git
 - (Optional) CUDA-capable GPU for faster processing
 
@@ -58,7 +61,12 @@ brew install python@3.10
 
 ## 🚀 Quick Start (One-Click Setup)
 
-Get the project running in minutes using our automated setup scripts.
+Get the project running in minutes using our automated setup scripts. These scripts handle everything:
+1. Creating a Python virtual environment.
+2. Installing backend dependencies.
+3. **Installing frontend dependencies (Tailwind CSS v4).**
+4. **Building static assets.**
+
 
 ### Windows
 ```powershell
@@ -110,7 +118,60 @@ pip install -r requirements.txt
 
 **Note**: For GPU support with PyTorch, visit [pytorch.org](https://pytorch.org/get-started/locally/) to install the CUDA version.
 
-### 4. Download YOLO models
+### 4. Frontend Setup (New)
+
+The project uses Tailwind CSS v4. You need to install dependencies and build the styles.
+
+```bash
+# Install dependencies (pnpm recommended)
+pnpm install
+# OR
+npm install
+
+# Build CSS
+pnpm run build:css
+# OR
+npm run build:css
+```
+
+
+### 5. GPU Support (Optional)
+
+To enable GPU acceleration (recommended for real-time processing), you must install the CUDA-enabled version of PyTorch. **This supports both CPU and GPU modes**.
+
+1.  **Install PyTorch (CUDA 12.1)**:
+    ```bash
+    # Uninstall default CPU version first
+    pip uninstall torch torchvision torchaudio
+
+    # Install GPU version
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+    ```
+
+2.  **PaddleOCR GPU (Optional)**:
+    For faster license plate recognition, you can install the GPU-optimized version of PaddlePaddle.
+    
+    **Note**: Our automated setup scripts (`setup.ps1` or `setup.sh`) will automatically detect your NVIDIA GPU and offer to install this for you.
+    
+    To install manually:
+    ```bash
+    pip uninstall paddlepaddle
+    pip install paddlepaddle-gpu
+    ```
+    *(Note: Check paddlepaddle.org.cn for specific CUDA version commands if needed)*
+
+3.  **Switching Modes**:
+    You can switch between CPU and GPU instantly by editing your `.env` file:
+    ```ini
+    USE_GPU=true  # Force GPU
+    # OR
+    USE_GPU=false # Force CPU
+    # OR
+    USE_GPU=auto  # Auto-detect (Default)
+    ```
+
+### 6. Download YOLO models
+
 
 The application requires the following model files:
 
@@ -123,7 +184,8 @@ The application requires the following model files:
   - **Status**: Included locally in `models/` directory. No download required if cloning full repo.
   - **Path**: `models/license_plate_detector.pt`
 
-### 5. Configure environment
+### 7. Configure environment
+
 
 ```bash
 cp .env.example .env
@@ -132,9 +194,10 @@ cp .env.example .env
 Edit `.env` and configure:
 - `SECRET_KEY`: Change for production
 - `PADDLE_OCR_ENABLED`: Enable PaddleOCR (true/false)
-- `DEVICE`: Set to `"cuda"` for GPU or `"cpu"` for CPU
+- `USE_GPU`: Set to `"true"`, `"false"`, or `"auto"` (default)
 
-### 6. Initialize the database
+### 8. Initialize the database
+
 
 ```bash
 flask db init
@@ -235,9 +298,11 @@ pytest --cov=app  # With coverage report
 | `DATABASE_URI` | Database connection | `sqlite:///instance/trafficai.db` |
 | `FLASK_APP` | Flask application entry | `run.py` |
 | `FLASK_ENV` | Flask environment | `development` |
-| `DEVICE` | Processing device (cuda/cpu) | `cpu` |
+| `USE_GPU` | Processing device (true/false/auto) | `auto` |
 | `MAX_CONTENT_LENGTH` | Max upload size (bytes) | `104857600` |
 | `UPLOAD_FOLDER` | Upload directory | `app/static/uploads` |
+| `SPEED_LIMIT` | Speed limit threshold in km/h | `60.0` |
+| `PIXELS_PER_METER` | Camera calibration value (pixels covering 1 meter) | `40.0` |
 
 ### ROI Configuration
 
@@ -268,7 +333,7 @@ RuntimeError: CUDA out of memory
 ```
 
 **Solution**:
-- Set `DEVICE=cpu` in `.env`
+- Set `USE_GPU=false` in `.env`
 - Reduce video batch size
 - Use a smaller YOLO model
 
@@ -320,6 +385,13 @@ kill -9 <PID>
 pip uninstall torch torchvision
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```
+
+### 7. Frontend / Tailwind Issues
+
+#### Styles not applying or "input.css not found"
+- Ensure you have run `pnpm install` and `pnpm run build:css`.
+- Check `app/static/css/output.css` exists.
+- If getting `Cannot find module`, delete `node_modules` and re-run `pnpm install`.
 
 ### Getting Help
 
