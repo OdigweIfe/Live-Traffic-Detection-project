@@ -1,0 +1,910 @@
+PS C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main> python run.py
+✅ Applied patch: torch.load defaults to weights_only=False
+Connectivity check to the model hoster has been skipped because `PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK` is enabled.
+✅ SocketIO Async Mode: eventlet
+ * Restarting with stat
+✅ Applied patch: torch.load defaults to weights_only=False
+Connectivity check to the model hoster has been skipped because `PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK` is enabled.
+✅ SocketIO Async Mode: eventlet
+ * Debugger is active!
+ * Debugger PIN: 894-388-599
+(25508) wsgi starting up on http://127.0.0.1:5000
+(25508) accepted ('127.0.0.1', 55963)
+(25508) accepted ('127.0.0.1', 64763)
+127.0.0.1 - - [11/Feb/2026 16:47:12] "GET / HTTP/1.1" 200 9539 0.017144
+127.0.0.1 - - [11/Feb/2026 16:47:12] "GET /static/css/output.css HTTP/1.1" 304 210 0.062809
+127.0.0.1 - - [11/Feb/2026 16:47:15] "GET /history HTTP/1.1" 200 8005 0.033224
+127.0.0.1 - - [11/Feb/2026 16:47:15] "GET /static/css/output.css HTTP/1.1" 304 210 0.014957
+127.0.0.1 - - [11/Feb/2026 16:47:17] "GET /summary?video=processed_f826cb3b-8e67-444e-92ca-62bc48dbef40_traffic.mp4 HTTP/1.1" 200 7734 0.022625
+127.0.0.1 - - [11/Feb/2026 16:47:17] "GET /static/css/output.css HTTP/1.1" 304 210 0.000000
+127.0.0.1 - - [11/Feb/2026 16:47:17] "GET /static/processed/processed_f826cb3b-8e67-444e-92ca-62bc48dbef40_traffic.mp4 HTTP/1.1" 200 334 0.001209
+127.0.0.1 - - [11/Feb/2026 16:47:28] "GET /dashboard HTTP/1.1" 200 21712 0.058319
+127.0.0.1 - - [11/Feb/2026 16:47:28] "GET /static/css/output.css HTTP/1.1" 304 210 0.000000
+127.0.0.1 - - [11/Feb/2026 16:47:34] "GET / HTTP/1.1" 200 9539 0.015505
+127.0.0.1 - - [11/Feb/2026 16:47:34] "GET /static/css/output.css HTTP/1.1" 304 210 0.000000
+✅ Video uploaded: b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:48:40] "POST /upload HTTP/1.1" 201 520 0.169621
+127.0.0.1 - - [11/Feb/2026 16:48:42] "GET /live?video_path=C:%5CUsers%5CHP%5CDownloads%5CLive-Traffic-Detection-project-main%5CLive-Traffic-Detection-project-main%5Capp/static/uploads%5Cb16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4&roi_config_path=config/roi/traffic_video_modified.json HTTP/1.1" 200 18179 0.054715
+(25508) accepted ('127.0.0.1', 62715)
+127.0.0.1 - - [11/Feb/2026 16:48:42] "GET /static/css/output.css HTTP/1.1" 304 210 0.001007
+127.0.0.1 - - [11/Feb/2026 16:48:42] "GET /static/js/socket.io.min.js HTTP/1.1" 304 216 0.046372
+127.0.0.1 - - [11/Feb/2026 16:48:42] "GET /socket.io/?EIO=4&transport=polling&t=PnDO_OV HTTP/1.1" 200 300 0.000000
+✅ Client connected: kGfSzKfxR7pkHFT3AAAB
+127.0.0.1 - - [11/Feb/2026 16:48:42] "POST /socket.io/?EIO=4&transport=polling&t=PnDO_OY&sid=7zsrYyV1B7jTJL6PAAAA HTTP/1.1" 200 219 0.001008
+(25508) accepted ('127.0.0.1', 63024)
+127.0.0.1 - - [11/Feb/2026 16:48:42] "GET /socket.io/?EIO=4&transport=polling&t=PnDO_OY.0&sid=7zsrYyV1B7jTJL6PAAAA HTTP/1.1" 200 181 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client kGfSzKfxR7pkHFT3AAAB joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+
+Failed to load OpenH264 library: openh264-1.8.0-win64.dll
+        Please check environment and/or download library: https://github.com/cisco/openh264/releases
+
+[libopenh264 @ 000002a97f312840] Incorrect library version loaded
+[ERROR:0@0.048] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:0@0.048] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+❌ Client disconnected: kGfSzKfxR7pkHFT3AAAB
+127.0.0.1 - - [11/Feb/2026 16:49:52] "GET /socket.io/?EIO=4&transport=websocket&sid=7zsrYyV1B7jTJL6PAAAA HTTP/1.1" 200 0 70.006723
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+127.0.0.1 - - [11/Feb/2026 16:49:53] "GET /socket.io/?EIO=4&transport=polling&t=PnDPGjp HTTP/1.1" 200 300 0.001247
+✅ Client connected: 7_tEpfGc6sSWTN67AAAD
+127.0.0.1 - - [11/Feb/2026 16:49:53] "POST /socket.io/?EIO=4&transport=polling&t=PnDPGju&sid=3BLJr9PJH8jUXyYzAAAC HTTP/1.1" 200 219 0.000000
+127.0.0.1 - - [11/Feb/2026 16:49:53] "GET /socket.io/?EIO=4&transport=polling&t=PnDPGju.0&sid=3BLJr9PJH8jUXyYzAAAC HTTP/1.1" 200 292 0.000000
+(25508) accepted ('127.0.0.1', 53759)
+127.0.0.1 - - [11/Feb/2026 16:49:53] "POST /socket.io/?EIO=4&transport=polling&t=PnDPGjy.0&sid=3BLJr9PJH8jUXyYzAAAC HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client 7_tEpfGc6sSWTN67AAAD joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:49:53] "GET /socket.io/?EIO=4&transport=polling&t=PnDPGjy&sid=3BLJr9PJH8jUXyYzAAAC HTTP/1.1" 200 181 0.000000
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+❌ Client disconnected: 7_tEpfGc6sSWTN67AAAD
+127.0.0.1 - - [11/Feb/2026 16:50:38] "GET /socket.io/?EIO=4&transport=websocket&sid=3BLJr9PJH8jUXyYzAAAC HTTP/1.1" 200 0 45.006451
+127.0.0.1 - - [11/Feb/2026 16:50:39] "GET /socket.io/?EIO=4&transport=polling&t=PnDPRsL HTTP/1.1" 200 300 0.000000
+✅ Client connected: XNctfWOicuE10xd6AAAF
+127.0.0.1 - - [11/Feb/2026 16:50:39] "POST /socket.io/?EIO=4&transport=polling&t=PnDPRsV&sid=xB2fJBQFSTN9Aez1AAAE HTTP/1.1" 200 219 0.008377
+(25508) accepted ('127.0.0.1', 64157)
+127.0.0.1 - - [11/Feb/2026 16:50:39] "GET /socket.io/?EIO=4&transport=polling&t=PnDPRsW&sid=xB2fJBQFSTN9Aez1AAAE HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:50:39] "POST /socket.io/?EIO=4&transport=polling&t=PnDPRsa&sid=xB2fJBQFSTN9Aez1AAAE HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client XNctfWOicuE10xd6AAAF joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:50:39] "GET /socket.io/?EIO=4&transport=polling&t=PnDPRsZ&sid=xB2fJBQFSTN9Aez1AAAE HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: XNctfWOicuE10xd6AAAF
+127.0.0.1 - - [11/Feb/2026 16:51:24] "GET /socket.io/?EIO=4&transport=websocket&sid=xB2fJBQFSTN9Aez1AAAE HTTP/1.1" 200 0 45.008047
+127.0.0.1 - - [11/Feb/2026 16:51:24] "GET /socket.io/?EIO=4&transport=polling&t=PnDPd09 HTTP/1.1" 200 300 0.000000
+✅ Client connected: Fk4NUOMcmUYyUoXTAAAH
+127.0.0.1 - - [11/Feb/2026 16:51:24] "POST /socket.io/?EIO=4&transport=polling&t=PnDPd0D&sid=i2Xj9_NmbIXIzF2qAAAG HTTP/1.1" 200 219 0.000000
+127.0.0.1 - - [11/Feb/2026 16:51:24] "GET /socket.io/?EIO=4&transport=polling&t=PnDPd0E&sid=i2Xj9_NmbIXIzF2qAAAG HTTP/1.1" 200 292 0.000000
+(25508) accepted ('127.0.0.1', 52598)
+127.0.0.1 - - [11/Feb/2026 16:51:24] "GET /socket.io/?EIO=4&transport=polling&t=PnDPd0J&sid=i2Xj9_NmbIXIzF2qAAAG HTTP/1.1" 200 181 0.000000
+127.0.0.1 - - [11/Feb/2026 16:51:24] "POST /socket.io/?EIO=4&transport=polling&t=PnDPd0J.0&sid=i2Xj9_NmbIXIzF2qAAAG HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client Fk4NUOMcmUYyUoXTAAAH joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a97f3e24c0] Incorrect library version loaded
+[ERROR:1@162.326] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:1@162.326] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+❌ Client disconnected: Fk4NUOMcmUYyUoXTAAAH
+127.0.0.1 - - [11/Feb/2026 16:52:34] "GET /socket.io/?EIO=4&transport=websocket&sid=i2Xj9_NmbIXIzF2qAAAG HTTP/1.1" 200 0 70.022685
+127.0.0.1 - - [11/Feb/2026 16:52:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDPuOj HTTP/1.1" 200 300 0.000000
+✅ Client connected: r_6RXvbpCVgaTS2nAAAJ
+127.0.0.1 - - [11/Feb/2026 16:52:36] "POST /socket.io/?EIO=4&transport=polling&t=PnDPuOn&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 60129)
+127.0.0.1 - - [11/Feb/2026 16:52:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDPuOo&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:52:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDPuOs&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 181 0.004760
+127.0.0.1 - - [11/Feb/2026 16:52:36] "POST /socket.io/?EIO=4&transport=polling&t=PnDPuOs.0&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client r_6RXvbpCVgaTS2nAAAJ joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:52:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDPuOu&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+❌ Client disconnected: r_6RXvbpCVgaTS2nAAAJ
+127.0.0.1 - - [11/Feb/2026 16:53:21] "GET /socket.io/?EIO=4&transport=websocket&sid=W-IJDd1clccCfCYCAAAI HTTP/1.1" 200 0 45.001886
+127.0.0.1 - - [11/Feb/2026 16:53:22] "GET /socket.io/?EIO=4&transport=polling&t=PnDQ3hl HTTP/1.1" 200 300 0.000000
+✅ Client connected: LEwRZR4JkojVlddZAAAL
+127.0.0.1 - - [11/Feb/2026 16:53:22] "POST /socket.io/?EIO=4&transport=polling&t=PnDQ3hq&sid=mcw-ViJHsZAR1-SpAAAK HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 52938)
+127.0.0.1 - - [11/Feb/2026 16:53:22] "GET /socket.io/?EIO=4&transport=polling&t=PnDQ3hr&sid=mcw-ViJHsZAR1-SpAAAK HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:53:22] "POST /socket.io/?EIO=4&transport=polling&t=PnDQ3hy&sid=mcw-ViJHsZAR1-SpAAAK HTTP/1.1" 200 219 0.002363
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client LEwRZR4JkojVlddZAAAL joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:53:22] "GET /socket.io/?EIO=4&transport=polling&t=PnDQ3hx&sid=mcw-ViJHsZAR1-SpAAAK HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: LEwRZR4JkojVlddZAAAL
+127.0.0.1 - - [11/Feb/2026 16:54:07] "GET /socket.io/?EIO=4&transport=websocket&sid=mcw-ViJHsZAR1-SpAAAK HTTP/1.1" 200 0 45.012302
+127.0.0.1 - - [11/Feb/2026 16:54:08] "GET /socket.io/?EIO=4&transport=polling&t=PnDQF0m HTTP/1.1" 200 300 0.000000
+✅ Client connected: EWjF_ajLWlj-hVDAAAAN
+127.0.0.1 - - [11/Feb/2026 16:54:08] "POST /socket.io/?EIO=4&transport=polling&t=PnDQF0t&sid=TSib7lqU5VgNeOCLAAAM HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 58912)
+127.0.0.1 - - [11/Feb/2026 16:54:08] "GET /socket.io/?EIO=4&transport=polling&t=PnDQF0u&sid=TSib7lqU5VgNeOCLAAAM HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:54:08] "POST /socket.io/?EIO=4&transport=polling&t=PnDQF0_.0&sid=TSib7lqU5VgNeOCLAAAM HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client EWjF_ajLWlj-hVDAAAAN joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+127.0.0.1 - - [11/Feb/2026 16:54:08] "GET /socket.io/?EIO=4&transport=polling&t=PnDQF0_&sid=TSib7lqU5VgNeOCLAAAM HTTP/1.1" 200 181 0.000000
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a9094d1b00] Incorrect library version loaded
+[ERROR:2@326.203] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:2@326.203] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+❌ Client disconnected: EWjF_ajLWlj-hVDAAAAN
+127.0.0.1 - - [11/Feb/2026 16:55:18] "GET /socket.io/?EIO=4&transport=websocket&sid=TSib7lqU5VgNeOCLAAAM HTTP/1.1" 200 0 70.021048
+127.0.0.1 - - [11/Feb/2026 16:55:20] "GET /socket.io/?EIO=4&transport=polling&t=PnDQWQI HTTP/1.1" 200 300 0.001002
+✅ Client connected: K7goZWt-rZoIxvjnAAAP
+127.0.0.1 - - [11/Feb/2026 16:55:20] "POST /socket.io/?EIO=4&transport=polling&t=PnDQWQM&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 61529)
+127.0.0.1 - - [11/Feb/2026 16:55:20] "GET /socket.io/?EIO=4&transport=polling&t=PnDQWQM.0&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:55:20] "GET /socket.io/?EIO=4&transport=polling&t=PnDQWQQ&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 181 0.000000
+127.0.0.1 - - [11/Feb/2026 16:55:20] "POST /socket.io/?EIO=4&transport=polling&t=PnDQWQR&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client K7goZWt-rZoIxvjnAAAP joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:55:20] "GET /socket.io/?EIO=4&transport=polling&t=PnDQWQS&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+❌ Client disconnected: K7goZWt-rZoIxvjnAAAP
+127.0.0.1 - - [11/Feb/2026 16:56:05] "GET /socket.io/?EIO=4&transport=websocket&sid=noJoCMJixlkDWYjTAAAO HTTP/1.1" 200 0 45.012062
+127.0.0.1 - - [11/Feb/2026 16:56:06] "GET /socket.io/?EIO=4&transport=polling&t=PnDQhi9 HTTP/1.1" 200 300 0.000000
+✅ Client connected: -GJtqeUBQYjFWOVdAAAR
+127.0.0.1 - - [11/Feb/2026 16:56:06] "POST /socket.io/?EIO=4&transport=polling&t=PnDQhiD&sid=AhfJB3kYnkF9MwRxAAAQ HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 57523)
+127.0.0.1 - - [11/Feb/2026 16:56:06] "GET /socket.io/?EIO=4&transport=polling&t=PnDQhiE&sid=AhfJB3kYnkF9MwRxAAAQ HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:56:06] "POST /socket.io/?EIO=4&transport=polling&t=PnDQhiK.0&sid=AhfJB3kYnkF9MwRxAAAQ HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client -GJtqeUBQYjFWOVdAAAR joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:56:06] "GET /socket.io/?EIO=4&transport=polling&t=PnDQhiK&sid=AhfJB3kYnkF9MwRxAAAQ HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: -GJtqeUBQYjFWOVdAAAR
+127.0.0.1 - - [11/Feb/2026 16:56:51] "GET /socket.io/?EIO=4&transport=websocket&sid=AhfJB3kYnkF9MwRxAAAQ HTTP/1.1" 200 0 45.012494
+127.0.0.1 - - [11/Feb/2026 16:56:51] "GET /socket.io/?EIO=4&transport=polling&t=PnDQsqg HTTP/1.1" 200 300 0.000000
+✅ Client connected: AMUrQq4qGaxOX7AuAAAT
+127.0.0.1 - - [11/Feb/2026 16:56:51] "POST /socket.io/?EIO=4&transport=polling&t=PnDQsql&sid=AY2zWDeZgFyZEJbRAAAS HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 50866)
+127.0.0.1 - - [11/Feb/2026 16:56:51] "GET /socket.io/?EIO=4&transport=polling&t=PnDQsql.0&sid=AY2zWDeZgFyZEJbRAAAS HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 16:56:51] "POST /socket.io/?EIO=4&transport=polling&t=PnDQsqq&sid=AY2zWDeZgFyZEJbRAAAS HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client AMUrQq4qGaxOX7AuAAAT joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+127.0.0.1 - - [11/Feb/2026 16:56:51] "GET /socket.io/?EIO=4&transport=polling&t=PnDQsqp&sid=AY2zWDeZgFyZEJbRAAAS HTTP/1.1" 200 181 0.000000
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a9094d1040] Incorrect library version loaded
+[ERROR:3@489.262] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:3@489.262] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+❌ Client disconnected: AMUrQq4qGaxOX7AuAAAT
+127.0.0.1 - - [11/Feb/2026 16:58:01] "GET /socket.io/?EIO=4&transport=websocket&sid=AY2zWDeZgFyZEJbRAAAS HTTP/1.1" 200 0 70.025634
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+127.0.0.1 - - [11/Feb/2026 16:58:03] "GET /socket.io/?EIO=4&transport=polling&t=PnDR8Hm HTTP/1.1" 200 300 0.000000
+✅ Client connected: 4rVoQVRB9dN0LQ6QAAAV
+127.0.0.1 - - [11/Feb/2026 16:58:03] "POST /socket.io/?EIO=4&transport=polling&t=PnDR8Hr&sid=DaXoDElfV4nmjzoeAAAU HTTP/1.1" 200 219 0.001029
+(25508) accepted ('127.0.0.1', 50618)
+127.0.0.1 - - [11/Feb/2026 16:58:03] "GET /socket.io/?EIO=4&transport=polling&t=PnDR8Hs&sid=DaXoDElfV4nmjzoeAAAU HTTP/1.1" 200 181 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client 4rVoQVRB9dN0LQ6QAAAV joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+❌ Client disconnected: 4rVoQVRB9dN0LQ6QAAAV
+127.0.0.1 - - [11/Feb/2026 16:58:48] "GET /socket.io/?EIO=4&transport=websocket&sid=DaXoDElfV4nmjzoeAAAU HTTP/1.1" 200 0 45.010417
+127.0.0.1 - - [11/Feb/2026 16:58:49] "GET /socket.io/?EIO=4&transport=polling&t=PnDRJZt HTTP/1.1" 200 300 0.000702
+✅ Client connected: 350BzNkKWv-Gk_EsAAAX
+127.0.0.1 - - [11/Feb/2026 16:58:49] "POST /socket.io/?EIO=4&transport=polling&t=PnDRJZy&sid=tw-UlkrU8u3enCN6AAAW HTTP/1.1" 200 219 0.002013
+(25508) accepted ('127.0.0.1', 60493)
+127.0.0.1 - - [11/Feb/2026 16:58:49] "GET /socket.io/?EIO=4&transport=polling&t=PnDRJZz&sid=tw-UlkrU8u3enCN6AAAW HTTP/1.1" 200 181 0.000000
+127.0.0.1 - - [11/Feb/2026 16:58:49] "GET /socket.io/?EIO=4&transport=polling&t=PnDRJa4&sid=tw-UlkrU8u3enCN6AAAW HTTP/1.1" 200 181 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client 350BzNkKWv-Gk_EsAAAX joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+❌ Client disconnected: 350BzNkKWv-Gk_EsAAAX
+127.0.0.1 - - [11/Feb/2026 16:59:34] "GET /socket.io/?EIO=4&transport=websocket&sid=tw-UlkrU8u3enCN6AAAW HTTP/1.1" 200 0 45.009107
+💾 Saved: ID-44 @ 5.8 km/h
+127.0.0.1 - - [11/Feb/2026 16:59:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDRUwi HTTP/1.1" 200 300 0.002122
+✅ Client connected: mGWJPmvMT4mQTvFMAAAZ
+127.0.0.1 - - [11/Feb/2026 16:59:36] "POST /socket.io/?EIO=4&transport=polling&t=PnDRUwo&sid=CVuiEUFDxdj1f3TDAAAY HTTP/1.1" 200 219 0.000651
+127.0.0.1 - - [11/Feb/2026 16:59:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDRUwo.0&sid=CVuiEUFDxdj1f3TDAAAY HTTP/1.1" 200 292 0.000726
+(25508) accepted ('127.0.0.1', 62278)
+127.0.0.1 - - [11/Feb/2026 16:59:36] "POST /socket.io/?EIO=4&transport=polling&t=PnDRUwt.0&sid=CVuiEUFDxdj1f3TDAAAY HTTP/1.1" 200 219 0.002178
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client mGWJPmvMT4mQTvFMAAAZ joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 16:59:36] "GET /socket.io/?EIO=4&transport=polling&t=PnDRUwt&sid=CVuiEUFDxdj1f3TDAAAY HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: mGWJPmvMT4mQTvFMAAAZ
+127.0.0.1 - - [11/Feb/2026 17:00:21] "GET /socket.io/?EIO=4&transport=websocket&sid=CVuiEUFDxdj1f3TDAAAY HTTP/1.1" 200 0 45.002347
+127.0.0.1 - - [11/Feb/2026 17:00:21] "GET /socket.io/?EIO=4&transport=polling&t=PnDRg7Q HTTP/1.1" 200 300 0.003069
+✅ Client connected: XVKVKWHJHqEv9RW7AAAb
+127.0.0.1 - - [11/Feb/2026 17:00:21] "POST /socket.io/?EIO=4&transport=polling&t=PnDRg7V&sid=1sSWHvG_cy5u8G0oAAAa HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 53640)
+127.0.0.1 - - [11/Feb/2026 17:00:21] "GET /socket.io/?EIO=4&transport=polling&t=PnDRg7V.0&sid=1sSWHvG_cy5u8G0oAAAa HTTP/1.1" 200 292 0.003717
+127.0.0.1 - - [11/Feb/2026 17:00:21] "POST /socket.io/?EIO=4&transport=polling&t=PnDRg7a.0&sid=1sSWHvG_cy5u8G0oAAAa HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client XVKVKWHJHqEv9RW7AAAb joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+127.0.0.1 - - [11/Feb/2026 17:00:21] "GET /socket.io/?EIO=4&transport=polling&t=PnDRg7a&sid=1sSWHvG_cy5u8G0oAAAa HTTP/1.1" 200 181 0.000000
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a908d206c0] Incorrect library version loaded
+[ERROR:4@699.393] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:4@699.393] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+❌ Client disconnected: XVKVKWHJHqEv9RW7AAAb
+127.0.0.1 - - [11/Feb/2026 17:01:57] "GET /socket.io/?EIO=4&transport=websocket&sid=1sSWHvG_cy5u8G0oAAAa HTTP/1.1" 200 0 95.026806
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+127.0.0.1 - - [11/Feb/2026 17:01:58] "GET /socket.io/?EIO=4&transport=polling&t=PnDS1dz HTTP/1.1" 200 300 0.000000
+✅ Client connected: gZ8-EKHiSPjyCdb1AAAd
+127.0.0.1 - - [11/Feb/2026 17:01:58] "POST /socket.io/?EIO=4&transport=polling&t=PnDS1e3&sid=6o-C78b7BLb9BvE4AAAc HTTP/1.1" 200 219 0.003063
+(25508) accepted ('127.0.0.1', 50149)
+127.0.0.1 - - [11/Feb/2026 17:01:58] "GET /socket.io/?EIO=4&transport=polling&t=PnDS1e4&sid=6o-C78b7BLb9BvE4AAAc HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:01:58] "POST /socket.io/?EIO=4&transport=polling&t=PnDS1eC&sid=6o-C78b7BLb9BvE4AAAc HTTP/1.1" 200 219 0.000523
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client gZ8-EKHiSPjyCdb1AAAd joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:01:58] "GET /socket.io/?EIO=4&transport=polling&t=PnDS1eB&sid=6o-C78b7BLb9BvE4AAAc HTTP/1.1" 200 181 0.000000
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+❌ Client disconnected: gZ8-EKHiSPjyCdb1AAAd
+127.0.0.1 - - [11/Feb/2026 17:02:43] "GET /socket.io/?EIO=4&transport=websocket&sid=6o-C78b7BLb9BvE4AAAc HTTP/1.1" 200 0 45.008826
+127.0.0.1 - - [11/Feb/2026 17:02:44] "GET /socket.io/?EIO=4&transport=polling&t=PnDSC-h HTTP/1.1" 200 300 0.001006
+✅ Client connected: lsus5f-on3OHJo1bAAAf
+127.0.0.1 - - [11/Feb/2026 17:02:44] "POST /socket.io/?EIO=4&transport=polling&t=PnDSC-m&sid=if2nzGSRpCubdzZYAAAe HTTP/1.1" 200 219 0.001399
+(25508) accepted ('127.0.0.1', 62144)
+127.0.0.1 - - [11/Feb/2026 17:02:44] "GET /socket.io/?EIO=4&transport=polling&t=PnDSC-n&sid=if2nzGSRpCubdzZYAAAe HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:02:44] "POST /socket.io/?EIO=4&transport=polling&t=PnDSC-s.0&sid=if2nzGSRpCubdzZYAAAe HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client lsus5f-on3OHJo1bAAAf joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:02:44] "GET /socket.io/?EIO=4&transport=polling&t=PnDSC-s&sid=if2nzGSRpCubdzZYAAAe HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+❌ Client disconnected: lsus5f-on3OHJo1bAAAf
+127.0.0.1 - - [11/Feb/2026 17:03:29] "GET /socket.io/?EIO=4&transport=websocket&sid=if2nzGSRpCubdzZYAAAe HTTP/1.1" 200 0 45.022006
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+127.0.0.1 - - [11/Feb/2026 17:03:30] "GET /socket.io/?EIO=4&transport=polling&t=PnDSOE_ HTTP/1.1" 200 300 0.000000
+✅ Client connected: oEPIxFDx5bSPh8pbAAAh
+127.0.0.1 - - [11/Feb/2026 17:03:30] "POST /socket.io/?EIO=4&transport=polling&t=PnDSOF5&sid=CZWBJpOka7qQUcyLAAAg HTTP/1.1" 200 219 0.000796
+127.0.0.1 - - [11/Feb/2026 17:03:30] "GET /socket.io/?EIO=4&transport=polling&t=PnDSOF5.0&sid=CZWBJpOka7qQUcyLAAAg HTTP/1.1" 200 292 0.000000
+(25508) accepted ('127.0.0.1', 50183)
+127.0.0.1 - - [11/Feb/2026 17:03:30] "POST /socket.io/?EIO=4&transport=polling&t=PnDSOFA&sid=CZWBJpOka7qQUcyLAAAg HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client oEPIxFDx5bSPh8pbAAAh joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:03:30] "GET /socket.io/?EIO=4&transport=polling&t=PnDSOF9&sid=CZWBJpOka7qQUcyLAAAg HTTP/1.1" 200 181 0.000600
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: oEPIxFDx5bSPh8pbAAAh
+127.0.0.1 - - [11/Feb/2026 17:04:15] "GET /socket.io/?EIO=4&transport=websocket&sid=CZWBJpOka7qQUcyLAAAg HTTP/1.1" 200 0 45.019889
+127.0.0.1 - - [11/Feb/2026 17:04:16] "GET /socket.io/?EIO=4&transport=polling&t=PnDSZQO HTTP/1.1" 200 300 0.000901
+✅ Client connected: DFVbmdBKPaDH3N-zAAAj
+127.0.0.1 - - [11/Feb/2026 17:04:16] "POST /socket.io/?EIO=4&transport=polling&t=PnDSZQR&sid=cymi5aW_vW1zKMB0AAAi HTTP/1.1" 200 219 0.000506
+(25508) accepted ('127.0.0.1', 50553)
+127.0.0.1 - - [11/Feb/2026 17:04:16] "GET /socket.io/?EIO=4&transport=polling&t=PnDSZQS&sid=cymi5aW_vW1zKMB0AAAi HTTP/1.1" 200 292 0.002013
+127.0.0.1 - - [11/Feb/2026 17:04:16] "POST /socket.io/?EIO=4&transport=polling&t=PnDSZQW.0&sid=cymi5aW_vW1zKMB0AAAi HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client DFVbmdBKPaDH3N-zAAAj joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+127.0.0.1 - - [11/Feb/2026 17:04:16] "GET /socket.io/?EIO=4&transport=polling&t=PnDSZQW&sid=cymi5aW_vW1zKMB0AAAi HTTP/1.1" 200 181 0.000000
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a908d5ab00] Incorrect library version loaded
+[ERROR:5@934.051] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:5@934.051] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 75.4 km/h
+❌ Client disconnected: DFVbmdBKPaDH3N-zAAAj
+127.0.0.1 - - [11/Feb/2026 17:05:26] "GET /socket.io/?EIO=4&transport=websocket&sid=cymi5aW_vW1zKMB0AAAi HTTP/1.1" 200 0 70.018183
+127.0.0.1 - - [11/Feb/2026 17:05:28] "GET /socket.io/?EIO=4&transport=polling&t=PnDSqyD HTTP/1.1" 200 300 0.000000
+✅ Client connected: ArHxMRn2HhPeuc8TAAAl
+127.0.0.1 - - [11/Feb/2026 17:05:28] "POST /socket.io/?EIO=4&transport=polling&t=PnDSq-G&sid=EpP7aT5yeR8HFwQxAAAk HTTP/1.1" 200 219 0.002001
+(25508) accepted ('127.0.0.1', 57521)
+127.0.0.1 - - [11/Feb/2026 17:05:28] "GET /socket.io/?EIO=4&transport=polling&t=PnDSq-_&sid=EpP7aT5yeR8HFwQxAAAk HTTP/1.1" 200 181 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client ArHxMRn2HhPeuc8TAAAl joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+❌ Client disconnected: ArHxMRn2HhPeuc8TAAAl
+127.0.0.1 - - [11/Feb/2026 17:06:13] "GET /socket.io/?EIO=4&transport=websocket&sid=EpP7aT5yeR8HFwQxAAAk HTTP/1.1" 200 0 45.085646
+127.0.0.1 - - [11/Feb/2026 17:06:14] "GET /socket.io/?EIO=4&transport=polling&t=PnDT0F5 HTTP/1.1" 200 300 0.000000
+✅ Client connected: Syj441Yn3w51ShLrAAAn
+127.0.0.1 - - [11/Feb/2026 17:06:14] "POST /socket.io/?EIO=4&transport=polling&t=PnDT0FA&sid=KMJcCE03WqCkkeCNAAAm HTTP/1.1" 200 219 0.000505
+127.0.0.1 - - [11/Feb/2026 17:06:14] "GET /socket.io/?EIO=4&transport=polling&t=PnDT0FB&sid=KMJcCE03WqCkkeCNAAAm HTTP/1.1" 200 292 0.001904
+(25508) accepted ('127.0.0.1', 61372)
+127.0.0.1 - - [11/Feb/2026 17:06:14] "POST /socket.io/?EIO=4&transport=polling&t=PnDT0FG.0&sid=KMJcCE03WqCkkeCNAAAm HTTP/1.1" 200 219 0.000589
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client Syj441Yn3w51ShLrAAAn joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:06:14] "GET /socket.io/?EIO=4&transport=polling&t=PnDT0FG&sid=KMJcCE03WqCkkeCNAAAm HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+❌ Client disconnected: Syj441Yn3w51ShLrAAAn
+127.0.0.1 - - [11/Feb/2026 17:06:59] "GET /socket.io/?EIO=4&transport=websocket&sid=KMJcCE03WqCkkeCNAAAm HTTP/1.1" 200 0 45.010597
+127.0.0.1 - - [11/Feb/2026 17:07:01] "GET /socket.io/?EIO=4&transport=polling&t=PnDTBYP HTTP/1.1" 200 300 0.000000
+✅ Client connected: OP8SQ9czJyIrP5EBAAAp
+127.0.0.1 - - [11/Feb/2026 17:07:01] "POST /socket.io/?EIO=4&transport=polling&t=PnDTBYT&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 219 0.001027
+127.0.0.1 - - [11/Feb/2026 17:07:01] "GET /socket.io/?EIO=4&transport=polling&t=PnDTBYT.0&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 292 0.000000
+(25508) accepted ('127.0.0.1', 65134)
+127.0.0.1 - - [11/Feb/2026 17:07:01] "POST /socket.io/?EIO=4&transport=polling&t=PnDTBYX.0&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client OP8SQ9czJyIrP5EBAAAp joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:07:01] "GET /socket.io/?EIO=4&transport=polling&t=PnDTBYX&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 181 0.000000
+127.0.0.1 - - [11/Feb/2026 17:07:01] "GET /socket.io/?EIO=4&transport=polling&t=PnDTBYc&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: OP8SQ9czJyIrP5EBAAAp
+127.0.0.1 - - [11/Feb/2026 17:07:46] "GET /socket.io/?EIO=4&transport=websocket&sid=piHJDR5wyIsxo_PDAAAo HTTP/1.1" 200 0 45.019278
+127.0.0.1 - - [11/Feb/2026 17:07:47] "GET /socket.io/?EIO=4&transport=polling&t=PnDTMnG HTTP/1.1" 200 300 0.000000
+✅ Client connected: xxn345FbEbtW7J7lAAAr
+127.0.0.1 - - [11/Feb/2026 17:07:47] "POST /socket.io/?EIO=4&transport=polling&t=PnDTMnL&sid=OqJpYQ1Wo5zkNTCxAAAq HTTP/1.1" 200 219 0.002013
+(25508) accepted ('127.0.0.1', 52165)
+127.0.0.1 - - [11/Feb/2026 17:07:47] "GET /socket.io/?EIO=4&transport=polling&t=PnDTMnL.0&sid=OqJpYQ1Wo5zkNTCxAAAq HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:07:47] "POST /socket.io/?EIO=4&transport=polling&t=PnDTMnR&sid=OqJpYQ1Wo5zkNTCxAAAq HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client xxn345FbEbtW7J7lAAAr joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🎬 Starting video processing thread for room 0827d7f4c3d6121197765ff8a7afa1b9
+✅ Processing thread started for room 0827d7f4c3d6121197765ff8a7afa1b9
+127.0.0.1 - - [11/Feb/2026 17:07:47] "GET /socket.io/?EIO=4&transport=polling&t=PnDTMnQ&sid=OqJpYQ1Wo5zkNTCxAAAq HTTP/1.1" 200 181 0.000000
+✅ Video: 1280x720, 518 frames, 30.0 FPS
+[libopenh264 @ 000002a9124f5fc0] Incorrect library version loaded
+[ERROR:6@1144.398] global cap_ffmpeg_impl.hpp:3194 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:6@1144.398] global cap_ffmpeg_impl.hpp:3211 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+📼 Recording processed video to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Loaded dedicated plate detection model: models/license_plate_detector.pt
+⚙️ Vehicle Detector using device: cpu
+⚙️ ANPR GPU Mode: DISABLED (Env: auto, Cuda: False)
+🔄 Loading specialized license plate detector...
+✅ Specialized plate detector loaded from local file!
+🔄 Initializing PaddleOCR (GPU: False)...
+⚠️ PaddleOCR failed: Unknown argument: use_gpu
+🔄 Initializing EasyOCR as fallback (GPU: False)...
+Using CPU. Note: This module is much faster with a GPU.
+Downloading detection model, please wait. This may take several minutes depending upon your network connection.
+⚠️ EasyOCR failed: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+❌ No OCR engine available!
+✅ AI systems ready (detector, red_light, tracker, anpr)
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 3
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 6
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-3: Initial > 60.0, but Final 29.7 <= 60.0
+💾 Saved: ID-6 @ 186.4 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 2
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 10
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 128.1 km/h
+💾 Saved: ID-10 @ 105.7 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 2
+⚠️ No plate text detected
+💾 Saved: ID-2 @ 48.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 5
+⚠️ No plate text detected
+💾 Saved: ID-5 @ 16.7 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 13
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-13: Initial > 60.0, but Final 31.8 <= 60.0
+❌ Client disconnected: xxn345FbEbtW7J7lAAAr
+127.0.0.1 - - [11/Feb/2026 17:08:32] "GET /socket.io/?EIO=4&transport=websocket&sid=OqJpYQ1Wo5zkNTCxAAAq HTTP/1.1" 200 0 45.010317
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 5
+⚠️ No plate text detected
+127.0.0.1 - - [11/Feb/2026 17:08:32] "GET /socket.io/?EIO=4&transport=polling&t=PnDTXyw HTTP/1.1" 200 300 0.000000
+✅ Client connected: nmmTuX8um1FpUF0JAAAt
+127.0.0.1 - - [11/Feb/2026 17:08:32] "POST /socket.io/?EIO=4&transport=polling&t=PnDTXz0&sid=-QbMrVOxngcHCkWsAAAs HTTP/1.1" 200 219 0.000977
+(25508) accepted ('127.0.0.1', 57867)
+127.0.0.1 - - [11/Feb/2026 17:08:32] "GET /socket.io/?EIO=4&transport=polling&t=PnDTXz1&sid=-QbMrVOxngcHCkWsAAAs HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:08:32] "POST /socket.io/?EIO=4&transport=polling&t=PnDTXz5&sid=-QbMrVOxngcHCkWsAAAs HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client nmmTuX8um1FpUF0JAAAt joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:08:32] "GET /socket.io/?EIO=4&transport=polling&t=PnDTXz4&sid=-QbMrVOxngcHCkWsAAAs HTTP/1.1" 200 181 0.000506
+💾 Saved: ID-5 @ 75.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 20
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 21
+⚠️ No plate text detected
+💾 Saved: ID-20 @ 46.5 km/h
+⚠️ Discarding Speed Violation for ID-21: Initial > 60.0, but Final 46.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 20
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-20: Initial > 60.0, but Final 17.9 <= 60.0
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 23
+⚠️ No plate text detected
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 21
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-23: Initial > 60.0, but Final 29.1 <= 60.0
+💾 Saved: ID-21 @ 24.2 km/h
+❌ Client disconnected: nmmTuX8um1FpUF0JAAAt
+127.0.0.1 - - [11/Feb/2026 17:09:17] "GET /socket.io/?EIO=4&transport=websocket&sid=-QbMrVOxngcHCkWsAAAs HTTP/1.1" 200 0 45.012190
+127.0.0.1 - - [11/Feb/2026 17:09:18] "GET /socket.io/?EIO=4&transport=polling&t=PnDTj6n HTTP/1.1" 200 300 0.000000
+✅ Client connected: mm8_chVt2ddnE8M2AAAv
+127.0.0.1 - - [11/Feb/2026 17:09:18] "POST /socket.io/?EIO=4&transport=polling&t=PnDTj6q&sid=Y44GBHj6cpEmPPqNAAAu HTTP/1.1" 200 219 0.002207
+(25508) accepted ('127.0.0.1', 65309)
+127.0.0.1 - - [11/Feb/2026 17:09:18] "GET /socket.io/?EIO=4&transport=polling&t=PnDTj6r&sid=Y44GBHj6cpEmPPqNAAAu HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:09:18] "POST /socket.io/?EIO=4&transport=polling&t=PnDTj6u.0&sid=Y44GBHj6cpEmPPqNAAAu HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client mm8_chVt2ddnE8M2AAAv joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:09:18] "GET /socket.io/?EIO=4&transport=polling&t=PnDTj6u&sid=Y44GBHj6cpEmPPqNAAAu HTTP/1.1" 200 181 0.000000
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 30
+⚠️ No plate text detected
+💾 Saved: ID-30 @ 63.0 km/h
+🚨 VIOLATION DETECTED: Speeding Violation | Vehicle 37
+⚠️ No plate text detected
+⚠️ Discarding Speed Violation for ID-37: Initial > 60.0, but Final 50.6 <= 60.0
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 39
+⚠️ No plate text detected
+💾 Saved: ID-39 @ 3.8 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 43
+⚠️ No plate text detected
+💾 Saved: ID-43 @ 5.4 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 44
+⚠️ No plate text detected
+💾 Saved: ID-44 @ 5.8 km/h
+❌ Client disconnected: mm8_chVt2ddnE8M2AAAv
+127.0.0.1 - - [11/Feb/2026 17:10:03] "GET /socket.io/?EIO=4&transport=websocket&sid=Y44GBHj6cpEmPPqNAAAu HTTP/1.1" 200 0 45.013349
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 45
+⚠️ No plate text detected
+127.0.0.1 - - [11/Feb/2026 17:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PnDTuTM HTTP/1.1" 200 300 0.000000
+✅ Client connected: uYRSr8Uk_V3GKXcaAAAx
+127.0.0.1 - - [11/Feb/2026 17:10:05] "POST /socket.io/?EIO=4&transport=polling&t=PnDTuTQ&sid=sfU1t46aaZIW0Q7hAAAw HTTP/1.1" 200 219 0.000000
+(25508) accepted ('127.0.0.1', 53474)
+127.0.0.1 - - [11/Feb/2026 17:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PnDTuTR&sid=sfU1t46aaZIW0Q7hAAAw HTTP/1.1" 200 292 0.000000
+127.0.0.1 - - [11/Feb/2026 17:10:05] "POST /socket.io/?EIO=4&transport=polling&t=PnDTuTU.0&sid=sfU1t46aaZIW0Q7hAAAw HTTP/1.1" 200 219 0.000000
+📹 Processing request for video: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+🔗 Client uYRSr8Uk_V3GKXcaAAAx joined room 0827d7f4c3d6121197765ff8a7afa1b9
+🔄 Resuming existing session for C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app/static/uploads\b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+127.0.0.1 - - [11/Feb/2026 17:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PnDTuTU&sid=sfU1t46aaZIW0Q7hAAAw HTTP/1.1" 200 181 0.000000
+💾 Saved: ID-45 @ 7.6 km/h
+🚨 VIOLATION DETECTED: Red Light Violation | Vehicle 46
+⚠️ No plate text detected
+💾 Saved: ID-46 @ 10.5 km/h
+📊 Stats saved to: processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4.json
+✅ Video saved to: C:\Users\HP\Downloads\Live-Traffic-Detection-project-main\Live-Traffic-Detection-project-main\app\static\processed\processed_b16886da-8530-4d52-ab37-e572cf1cfc15_traffic.mp4
+✅ Processing complete: 48 vehicles, 20 violations
+❌ Client disconnected: uYRSr8Uk_V3GKXcaAAAx
+127.0.0.1 - - [11/Feb/2026 17:10:50] "GET /socket.io/?EIO=4&transport=websocket&sid=sfU1t46aaZIW0Q7hAAAw HTTP/1.1" 200 0 45.010779
+127.0.0.1 - - [11/Feb/2026 17:10:50] "GET /socket.io/?EIO=4&transport=polling&t=PnDU3gY HTTP/1.1" 200 300 0.000000
+✅ Client connected: RYYy38imwxi6ipapAAAz
+127.0.0.1 - - [11/Feb/2026 17:10:50] "POST /socket.io/?EIO=4&transport=polling&t=PnDU3gc&sid=ZX3PLWmPdO4prNezAAAy HTTP/1.1" 200 219 0.000000
+127.0.0.1 - - [11/Feb/2026 17:10:50] "GET /socket.io/?EIO=4&transport=polling&t=PnDU3gc.0&sid=ZX3PLWmPdO4prNezAAAy HTTP/1.1" 200 292 0.000000
+(25508) accepted ('127.0.0.1', 60981)
+127.0

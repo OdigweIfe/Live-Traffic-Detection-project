@@ -28,6 +28,7 @@ import hashlib
 # Global dictionary to track active processing sessions
 # Key: video_path, Value: { 'room_id': str, 'stop': bool, 'progress': int }
 active_video_sessions = {}
+completed_video_sessions = {} # Key: video_path, Value: { result_data }
 processing_sessions = {}  # Legacy: Keep for sid tracking if needed, but primarily use active_video_sessions
 
 
@@ -72,6 +73,23 @@ def handle_start_processing(data):
     room_id = hashlib.md5(video_path.encode()).hexdigest()
     join_room(room_id)
     print(f"🔗 Client {sid} joined room {room_id}")
+
+    # Check if already completed!
+    if video_path in completed_video_sessions:
+        print(f"✅ Video already processed! Sending cached result for {video_path}")
+        result = completed_video_sessions[video_path]
+        # Send progress 100% first so client UI updates before redirect
+        emit('frame', {
+            'frame_index': result.get('frames_processed', 0),
+            'image': '',
+            'signal_state': 'unknown',
+            'vehicles_count': 0,
+            'unique_vehicles': result.get('unique_vehicles', 0),
+            'total_violations': result.get('violations_detected', 0),
+            'progress': 100
+        })
+        emit('processing_complete', result)
+        return
     
     # Check if already processing this video
     if video_path in active_video_sessions:
@@ -141,7 +159,11 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
                 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                 
             out = cv2.VideoWriter(processed_path, fourcc, fps, (width, height))
-            print(f"📼 Recording processed video to: {processed_filename}")
+            if not out.isOpened():
+                print(f"❌ Failed to initialize video writer: {processed_filename}")
+                out = None
+            else:
+                print(f"📼 Recording processed video to: {processed_filename}")
             
             # Initialize AI systems
             from app.ai.detector import VehicleDetector
@@ -364,7 +386,8 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
                 )
                 
                 # Write frame to video file (RECORDING)
-                out.write(annotated_frame)
+                if out:
+                    out.write(annotated_frame)
                 
                 # Encode frame to base64
                 _, buffer = cv2.imencode('.jpg', annotated_frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
@@ -423,7 +446,8 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
                     print(f"❌ Database error: {e}")
             
             cap.release()
-            out.release()
+            if out:
+                out.release()
             
             # Save stats to JSON sidecar
             json_filename = f"{processed_filename}.json"
@@ -465,7 +489,17 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
             socketio.emit('error', {'message': str(e)}, room=room_id)
         finally:
             if video_path in active_video_sessions:
+                # Cache the result so if client reconnects, we don't restart!
+                completed_video_sessions[video_path] = {
+                    'frames_processed': frame_idx,
+                    'violations_detected': final_stats['total_violations'] if 'final_stats' in locals() else 0,
+                    'unique_vehicles': final_stats['total_unique_vehicles'] if 'final_stats' in locals() else 0,
+                    'processed_video': processed_filename if 'processed_filename' in locals() else None,
+                    'message': 'Video processing complete!',
+                    'timestamp': datetime.utcnow().isoformat()
+                }
                 del active_video_sessions[video_path]
+                print(f"🏁 Session moved to completed cache: {video_path}")
 
 
 def draw_roi_zones(frame, roi_config):

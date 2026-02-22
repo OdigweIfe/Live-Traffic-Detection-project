@@ -3,7 +3,7 @@ Flask-SQLAlchemy==3.1.1
 Flask-Migrate==4.0.5
 python-dotenv==1.0.0
 opencv-python-headless==4.8.1.78
-ultralytics==8.0.200
+ultralytics>=8.3.0
 torch
 numpy==1.26.0
 

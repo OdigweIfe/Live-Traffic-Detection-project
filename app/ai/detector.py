@@ -1,20 +1,25 @@
-from ultralytics import YOLO
 import torch
 import os
 
-# PyTorch 2.6+ Security fix for loading Ultralytics models
+# --- PATCH FOR PYTORCH 2.6+ / ULTRALYTICS PICKLE ISSUE ---
+# PyTorch 2.6 made weights_only=True the default, which breaks many models including older Ultralytics ones.
+# We monkey-patch torch.load to default to weights_only=False for this application to ensure compatibility.
 try:
-    if hasattr(torch.serialization, 'add_safe_globals'):
-        import ultralytics.nn.tasks
-        torch.serialization.add_safe_globals([
-            ultralytics.nn.tasks.DetectionModel,
-            ultralytics.nn.tasks.SegmentationModel,
-            ultralytics.nn.tasks.PoseModel,
-            ultralytics.nn.tasks.ClassificationModel,
-            ultralytics.nn.tasks.OBBModel
-        ])
-except Exception:
-    pass
+    _original_torch_load = torch.load
+
+    def safe_torch_load(*args, **kwargs):
+        # If 'weights_only' is not specified, default it to False
+        if 'weights_only' not in kwargs:
+            kwargs['weights_only'] = False
+        return _original_torch_load(*args, **kwargs)
+
+    torch.load = safe_torch_load
+    print("✅ Applied patch: torch.load defaults to weights_only=False")
+except Exception as e:
+    print(f"⚠️ Could not patch torch.load: {e}")
+# ---------------------------------------------------------
+
+from ultralytics import YOLO
 
 class VehicleDetector:
     def __init__(self, model_path='models/yolov8n.pt', plate_model_path='models/license_plate_detector.pt'):
