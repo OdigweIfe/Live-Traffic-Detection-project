@@ -3,18 +3,29 @@ import os
 
 # --- PATCH FOR PYTORCH 2.6+ / ULTRALYTICS PICKLE ISSUE ---
 # PyTorch 2.6 made weights_only=True the default, which breaks many models including older Ultralytics ones.
-# We monkey-patch torch.load to default to weights_only=False for this application to ensure compatibility.
 try:
-    _original_torch_load = torch.load
-
+    import ultralytics.nn.tasks
+    _orig_torch_safe_load = getattr(ultralytics.nn.tasks, 'torch_safe_load', None)
+    if _orig_torch_safe_load:
+        def patched_torch_safe_load(weight):
+            return torch.load(weight, map_location='cpu', weights_only=False), weight
+        ultralytics.nn.tasks.torch_safe_load = patched_torch_safe_load
+        
+    import torch.serialization
+    _orig_torch_load = torch.load
     def safe_torch_load(*args, **kwargs):
-        # If 'weights_only' is not specified, default it to False
-        if 'weights_only' not in kwargs:
-            kwargs['weights_only'] = False
-        return _original_torch_load(*args, **kwargs)
-
+        if 'weights_only' not in kwargs: kwargs['weights_only'] = False
+        return _orig_torch_load(*args, **kwargs)
     torch.load = safe_torch_load
-    print("✅ Applied patch: torch.load defaults to weights_only=False")
+    
+    if hasattr(torch.serialization, 'load'):
+        _orig_serialization_load = torch.serialization.load
+        def safe_serialization_load(*args, **kwargs):
+            if 'weights_only' not in kwargs: kwargs['weights_only'] = False
+            return _orig_serialization_load(*args, **kwargs)
+        torch.serialization.load = safe_serialization_load
+        
+    print("✅ Applied robust patch: torch.load defaults to weights_only=False")
 except Exception as e:
     print(f"⚠️ Could not patch torch.load: {e}")
 # ---------------------------------------------------------

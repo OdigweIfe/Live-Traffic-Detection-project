@@ -152,13 +152,14 @@ def process_video_stream(app, room_id, video_path, roi_config_path=None):
             
             # Use mp4v codec (native Windows, no external library needed)
             # Use avc1 (H.264) for better browser compatibility
-            try:
-                fourcc = cv2.VideoWriter_fourcc(*'avc1')
-            except:
-                print("⚠️ avc1 codec not found, falling back to mp4v")
-                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            fourcc_avc1 = cv2.VideoWriter_fourcc(*'avc1')
+            out = cv2.VideoWriter(processed_path, fourcc_avc1, fps, (width, height))
+            
+            if not out.isOpened():
+                print("⚠️ avc1 codec not found or failed, falling back to mp4v")
+                fourcc_mp4v = cv2.VideoWriter_fourcc(*'mp4v')
+                out = cv2.VideoWriter(processed_path, fourcc_mp4v, fps, (width, height))
                 
-            out = cv2.VideoWriter(processed_path, fourcc, fps, (width, height))
             if not out.isOpened():
                 print(f"❌ Failed to initialize video writer: {processed_filename}")
                 out = None
